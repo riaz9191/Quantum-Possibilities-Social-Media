@@ -1,4 +1,4 @@
-import React from "react";
+
 import { FaUserFriends } from "react-icons/fa";
 import news from "../../../assets/images/sidebar2/1.png";
 import user1 from "../../../assets/images/sidebar2/u1.png";

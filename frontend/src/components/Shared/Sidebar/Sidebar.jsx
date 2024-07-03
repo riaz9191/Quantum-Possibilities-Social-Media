@@ -12,7 +12,7 @@ import userImg from "../../../assets/images/user/user1.png";
 
 const Sidebar = () => {
   return (
-    <div className="pl-4 pt-2 shadow-md h-screen">
+    <div className="pl-4 pt-2 shadow-md h-screen fixed">
       <div className="flex items-center space-x-4 mb-4">
         <img
           src={userImg}

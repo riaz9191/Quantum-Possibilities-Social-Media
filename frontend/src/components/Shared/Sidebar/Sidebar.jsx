@@ -1,45 +1,74 @@
-import React from 'react';
-import { FaUser, FaUsers, FaComments, FaBookmark, FaWallet, FaStore, FaUserTie, FaShoppingCart } from 'react-icons/fa';
+import {
+  FaUser,
+  FaUsers,
+  FaComments,
+  FaBookmark,
+  FaWallet,
+  FaStore,
+  FaUserTie,
+  FaShoppingCart,
+} from "react-icons/fa";
+import userImg from "../../../assets/images/user/user1.png";
 
 const Sidebar = () => {
   return (
-    <div className="">
+    <div className="pl-4 pt-2 shadow-md h-screen">
       <div className="flex items-center space-x-4 mb-4">
-        <img src="path-to-profile-image.jpg" alt="James Rodigan" className="w-10 h-10 rounded-full" />
-        <span>James Rodigan</span>
+        <img
+          src={userImg}
+          alt="James Rodigan"
+          className="w-12 h-12 rounded-full"
+        />
+        <span className="font-semibold text-lg">James Rodigan</span>
       </div>
       <ul className="space-y-4">
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaUser />
-          <span>Explore</span>
+          <p className="text-black">
+            <span>Explore</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaUsers />
-          <span>Friends</span>
+          <p className="text-black">
+            <span>Friends</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaComments />
-          <span>Groups</span>
+          <p className="text-black">
+            <span>Groups</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaBookmark />
-          <span>Pages</span>
+          <p className="text-black">
+            <span>Pages</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaWallet />
-          <span>Wallet</span>
+          <p className="text-black">
+            <span>Wallet</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaStore />
-          <span>Market Place</span>
+          <p className="text-black">
+            <span>Market Place</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaUserTie />
-          <span>Seller Panel</span>
+          <p className="text-black">
+            <span>Seller Panel</span>
+          </p>
         </li>
         <li className="flex items-center space-x-3 text-[#307777]">
           <FaShoppingCart />
-          <span>Buyer Panel</span>
+          <p className="text-black">
+            <span>Buyer Panel</span>
+          </p>
         </li>
       </ul>
     </div>

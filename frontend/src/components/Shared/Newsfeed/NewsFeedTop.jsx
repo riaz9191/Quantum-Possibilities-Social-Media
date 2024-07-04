@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const NewsfeedTop = () => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg">
+    <div className="p-4 bg-white  shadow-md rounded-lg">
       <div className="flex items-center space-x-4 mb-4">
         <img
           src={profileImg}

@@ -8,6 +8,7 @@ import post3 from '../../../assets/images/posts/post3.png';
 import user1 from '../../../assets/images/user/userr1.png';
 import user2 from '../../../assets/images/user/userr2.png';
 import user3 from '../../../assets/images/user/userr3.png';
+import { Link } from 'react-router-dom';
 
 const NewsfeedTop = () => {
   return (
@@ -35,12 +36,12 @@ const NewsfeedTop = () => {
         </button>
       </div>
       <div className="flex space-x-2 overflow-x-auto">
-        <div className="relative w-1/4">
-          <img src={profileImg} alt="Post" className="w-full h-full rounded-lg object-cover" />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-            <button className="bg-green-500 p-2 rounded-full text-white text-2xl">+</button>
-          </div>
-        </div>
+      <div className="relative w-1/4">
+      <img src={profileImg} alt="Profile" className="w-full h-full rounded-lg object-cover" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Link to='/story'><button  className="absolute bottom-[-0px] bg-green-500 py-6 px-4 rounded-full text-white text-2xl">+</button></Link>
+      </div>
+    </div>
         <div className="relative w-1/4">
           <img src={post1} alt="Post" className="w-full h-full rounded-lg object-cover" />
           <div className="absolute bottom-0 left-0 p-2">

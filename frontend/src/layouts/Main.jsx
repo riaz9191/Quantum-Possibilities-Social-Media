@@ -4,7 +4,7 @@ import Footer from "../components/Shared/Footer/Footer";
 const Main = () => {
   return (
     <div>
-      <div className="">
+      <div className="bg-[#E5E6EC]">
         <Navbar />
         {/* <Sidebar /> */}
         <div className="">
@@ -14,7 +14,7 @@ const Main = () => {
         </div>
           {/* <RightSidebar /> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

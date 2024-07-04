@@ -1,7 +1,12 @@
+import NewsfeedTop from "./NewsFeedTop"
+import Post from "./Post"
 
 const Newsfeed = () => {
   return (
-    <div>Newsfeed</div>
+    <div>
+      <NewsfeedTop/>
+      <Post/>
+    </div>
   )
 }
 

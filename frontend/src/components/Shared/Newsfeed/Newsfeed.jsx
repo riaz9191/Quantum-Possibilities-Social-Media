@@ -6,6 +6,7 @@ const Newsfeed = () => {
     <div>
       <NewsfeedTop/>
       <Post/>
+      <Post/>
     </div>
   )
 }

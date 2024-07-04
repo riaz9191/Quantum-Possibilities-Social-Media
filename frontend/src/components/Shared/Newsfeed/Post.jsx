@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { FaThumbsUp, FaComment, FaShare, FaEllipsisH } from 'react-icons/fa';
-import profileImg from '../../../assets/images/user/profile.jpg';  
-import postImg from '../../../assets/images/posts/post1.png'; 
-import { FacebookSelector } from 'react-reactions';
+import { FaThumbsUp, FaComment, FaShare, FaEllipsisH, FaLaugh, FaHeart, FaThumbsUp as FaThumbsUpFilled, FaClosedCaptioning, FaCrosshairs } from 'react-icons/fa';
+import profileImg from '../../../assets/images/posts/post1.png'; 
+import postImg from '../../../assets/images/user/profile.jpg';  
 
 const Post = () => {
   const [showReactions, setShowReactions] = useState(false);
-  const [showMoreComments, setShowMoreComments] = useState(false);
+  const [reactions, setReactions] = useState([]);
+  const [showMoreComments, setShowMoreComments] = useState(true);
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -32,12 +32,17 @@ const Post = () => {
     setShowMoreComments(!showMoreComments);
   };
 
+  const handleReaction = (reaction) => {
+    setReactions([...reactions, reaction]);
+    setShowReactions(false);
+  };
+
   const handleShowReactions = () => {
     setShowReactions(!showReactions);
   };
 
   return (
-    <div className="bg-white p-4 shadow-md rounded-lg mb-4">
+    <div className="bg-white p-4 shadow-md rounded-lg mb-4 mt-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           <img src={profileImg} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
@@ -46,22 +51,25 @@ const Post = () => {
             <p className="text-gray-500 text-sm">1h</p>
           </div>
         </div>
+        <div className='flex gap-4'>
         <FaEllipsisH />
+        <FaCrosshairs />
+        </div>
       </div>
       <img src={postImg} alt="Post" className="w-full rounded-lg mb-4" />
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
-          <span>268</span>
-          <span>😆</span>
-          <span>❤️</span>
-          <span>👍</span>
+          <span>{reactions.length}</span>
+          {reactions.includes('like') && <FaThumbsUpFilled className="text-blue-500" />}
+          {reactions.includes('love') && <FaHeart className="text-red-500" />}
+          {reactions.includes('laugh') && <FaLaugh className="text-yellow-500" />}
         </div>
         <div className="flex items-center space-x-4">
           <span>39 Comments</span>
           <span>30 Shares</span>
         </div>
       </div>
-      <div className="flex justify-around border-t border-b py-2">
+      <div className="flex justify-around border-t border-b py-2 relative">
         <button className="flex items-center space-x-1" onClick={handleShowReactions}>
           <FaThumbsUp />
           <span>Like</span>
@@ -74,8 +82,14 @@ const Post = () => {
           <FaShare />
           <span>Share</span>
         </button>
+        {showReactions && (
+          <div className="absolute bottom-12 left-0 flex space-x-2 bg-white p-2 shadow-lg rounded-lg">
+            <button onClick={() => handleReaction('like')}><FaThumbsUp className="text-blue-500" /></button>
+            <button onClick={() => handleReaction('love')}><FaHeart className="text-red-500" /></button>
+            <button onClick={() => handleReaction('laugh')}><FaLaugh className="text-yellow-500" /></button>
+          </div>
+        )}
       </div>
-      {showReactions && <FacebookSelector />}
       <div className="mt-2">
         {showMoreComments ? comments.map(comment => (
           <div key={comment.id} className="mb-2">

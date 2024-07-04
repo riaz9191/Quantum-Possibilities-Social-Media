@@ -7,7 +7,7 @@ import Sidebar2 from "../../components/Shared/Sidebar2/Sidebar2";
 const Home = () => {
   return (
   // <Container>
-      <div className="flex">
+      <div className="flex gap-4">
       <div className="w-2/12">
         <Sidebar />
       </div>

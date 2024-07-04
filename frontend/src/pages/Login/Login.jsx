@@ -1,93 +1,66 @@
-import { Link } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
+import React from 'react';
 
-const Login = () => {
+const LoginPage = () => {
   return (
-    <div className='flex justify-center items-center min-h-screen'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Log In</h1>
-          <p className='text-sm text-gray-400'>
-            Sign in to access your account
-          </p>
-        </div>
-        <form
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                required
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                name='password'
-                autoComplete='current-password'
-                id='password'
-                required
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type='submit'
-              className='bg-rose-500 w-full rounded-md py-3 text-white'
-            >
-              Continue
-            </button>
-          </div>
-        </form>
-        <div className='space-y-1'>
-          <button className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
-            Forgot password?
-          </button>
-        </div>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Login with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
-          Don&apos;t have an account yet?{' '}
-          <Link
-            to='/signup'
-            className='hover:underline hover:text-rose-500 text-gray-600'
-          >
-            Sign up
-          </Link>
-          .
+    <div className="min-h-screen flex bg-[#0B3243] p-10">
+      {/* Left section */}
+      <div className="w-1/2  text-white p-16 flex flex-col justify-center">
+        <h1 className="text-5xl font-bold mb-6">Welcome to the first decentralised Social Network in the world</h1>
+        <p className="text-lg mb-6">
+          We are the only decentralised social network that gives opportunity to monetise your time
+          even if you are a normal user who doesn’t create any content and use the earning to buy
+          any service or goods from the native marketplace.
         </p>
+        <button className="bg-[#307777] w-1/4 text-white py-2 px-4 rounded-lg text-lg hover:bg-green-700 transition duration-200">
+          Register Now!
+        </button>
+      </div>
+
+      {/* Right section */}
+      <div className="w-1/2  flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Login to your Account</h2>
+          <form>
+            <div className="mb-4">
+              <label className="block text-gray-700">Email Address</label>
+              <input
+                type="email"
+                placeholder="hello@example.cl"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-6 relative">
+              <label className="block text-gray-700">Password</label>
+              <input
+                type="password"
+                placeholder="********"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+              <a href="#" className="absolute right-0 bottom-2 text-blue-500 text-sm">Forgot Password?</a>
+            </div>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <input type="checkbox" id="remember" className="mr-2" />
+                <label htmlFor="remember" className="text-gray-700">Remember me</label>
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="remember" className="text-gray-700">Forget Password</label>
+              </div>
+            </div>
+            <button className="w-full bg-[#307777] text-white py-2 rounded-lg hover:bg-green-700 transition duration-200">
+              Login
+            </button>
+          </form>
+          <div className="my-6 flex items-center justify-center">
+            <span className="text-gray-400 mx-2">or sign up with</span>
+          </div>
+          <p className="text-center text-gray-700 mt-6">
+            Don't have an Account? <a href="#" className="text-blue-500">Sign up here</a>
+          </p>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default LoginPage;

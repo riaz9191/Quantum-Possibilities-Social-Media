@@ -7,7 +7,7 @@ import add2 from "../../../assets/images/sidebar2/s1.png";
 
 const Sidebar2 = () => {
   return (
-    <div className="p-4 bg-white shadow-md">
+    <div className="p-4 bg-white shadow-md fixed w-2/12 h-full">
       <div className="mb-4 relative">
         <img
           src={news}

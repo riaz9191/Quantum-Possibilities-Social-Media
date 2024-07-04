@@ -8,16 +8,16 @@ const Home = () => {
   return (
   // <Container>
       <div className="flex gap-4">
-      <div className="w-2/12">
+      <div className="w-2/12 hidden md:flex">
         <Sidebar />
       </div>
-      <div className="w-2/12">
+      <div className="w-2/12 hidden md:flex">
         <Sidebar2 />
       </div>
-      <div className="w-6/12">
+      <div className="w-full md:w-6/12">
         <Newsfeed />
       </div>
-      <div className="w-2/12">
+      <div className="w-2/12 hidden md:flex">
         <RightSidebar />
       </div>
     </div>

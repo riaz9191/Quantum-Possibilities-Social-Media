@@ -1,111 +1,114 @@
-import { Link } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
+import React from 'react';
 
-const SignUp = () => {
+const SignupPage = () => {
   return (
-    <div className='flex justify-center items-center min-h-screen'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to StayVista</p>
-        </div>
-        <form
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <label htmlFor='image' className='block mb-2 text-sm'>
-                Select Image:
-              </label>
-              <input
-                required
-                type='file'
-                id='image'
-                name='image'
-                accept='image/*'
-              />
-            </div>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                required
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                name='password'
-                autoComplete='new-password'
-                id='password'
-                required
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type='submit'
-              className='bg-rose-500 w-full rounded-md py-3 text-white'
-            >
-              Continue
-            </button>
-          </div>
-        </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Signup with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
-          Already have an account?{' '}
-          <Link
-            to='/login'
-            className='hover:underline hover:text-rose-500 text-gray-600'
-          >
-            Login
-          </Link>
-          .
+    <div className="min-h-screen flex bg-[#0B3243] p-10">
+      {/* Left section */}
+      <div className="w-1/2 text-white p-16 flex flex-col justify-center">
+        <h1 className="text-5xl font-bold mb-6">Welcome to the first decentralised Social Network in the world</h1>
+        <p className="text-lg mb-6">
+          We are the only decentralised social network that gives opportunity to monetise your time
+          even if you are a normal user who doesn’t create any content and use the earning to buy
+          any service or goods from the native marketplace.
         </p>
+        <button className="bg-[#307777] w-1/4 text-white py-2 px-4 rounded-lg text-lg hover:bg-green-700 transition duration-200">
+          Login Now!
+        </button>
+      </div>
+
+      {/* Right section */}
+      <div className="w-1/2 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Register your Account</h2>
+          <form>
+            <div className="mb-4">
+              <label className="block text-gray-700">First Name</label>
+              <input
+                type="text"
+                placeholder="First Name"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Last Name</label>
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Email Address</label>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Password</label>
+              <input
+                type="password"
+                placeholder="Enter your Password"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Date of Birth</label>
+              <div className="flex space-x-2">
+                <select className="w-1/3 px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                  <option>MM</option>
+                  {/* Add more months */}
+                </select>
+                <select className="w-1/3 px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                  <option>DD</option>
+                  {/* Add more days */}
+                </select>
+                <select className="w-1/3 px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                  <option>YYYY</option>
+                  {/* Add more years */}
+                </select>
+              </div>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Phone Number</label>
+              <div className="flex">
+                <select className="w-1/3 px-4 py-2 border rounded-l-lg focus:outline-none focus:border-blue-500">
+                  <option>US</option>
+                  {/* Add more country codes */}
+                </select>
+                <input
+                  type="text"
+                  placeholder="+1 (555) 000-0000"
+                  className="w-2/3 px-4 py-2 border rounded-r-lg focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Your Gender</label>
+              <select className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                <option>Choose Gender</option>
+                {/* Add more gender options */}
+              </select>
+            </div>
+            <div className="mb-6">
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" />
+                <span className="text-gray-700">I accept the <a href="#" className="text-blue-500">Terms and Conditions</a> of the website</span>
+              </label>
+            </div>
+            <button className="w-full bg-[#307777] text-white py-2 rounded-lg hover:bg-green-700 transition duration-200">
+              Complete Registration!
+            </button>
+          </form>
+          <p className="text-center text-gray-700 mt-6">
+            Already have an account? <a href="/login" className="text-blue-500">
+              Login here</a>
+          </p>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignupPage;

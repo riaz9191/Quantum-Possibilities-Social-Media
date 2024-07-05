@@ -4,6 +4,8 @@ import {
   FaArrowRight,
   FaTimes,
   FaEllipsisH,
+  FaShare,
+  FaEye,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import { useHistory } from 'react-router-dom';
@@ -16,12 +18,12 @@ const stories = [
     time: "21 hour",
     image: "https://via.placeholder.com/50",
     mainImage:
-      "https://s3-alpha-sig.figma.com/img/0d63/5630/71ee0be67a603e99a26544662f2b5442?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JRFqL855BK5JIx4zmncZBryQ9MWYuNPNotaJ2GI-B-ps1OkibiJE7cCP-f-BPTtFSoA5dFALj--YsFGj4RSqd2~WWEhyDIE7IIz1xg180r4zsvr6EtwE778YfYZ8I3joP40EXoocG1v~bxMBgGHd2p0q0EvV~WuFZa1m8p0ROS8ZXze0Cg0FjdHNtCwITjGBW3XgiFawHe7mP3Xe-Fpcjmp37REWlqSYYedU0dNawJd95eLqplwIk3hTcksYogUInF~T2wnr0Mlym4S03HiOK5zwRX2KSc4WHCQ6W4-7k0ojCiqsBOznCItvUK4FHW95Rr4VjBPIyeoK88fBwofCig__",
+      "https://s3-alpha-sig.figma.com/img/0fb7/9f30/201daf8e9de84a566c6ee7814724ee6e?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bV8yYTn1xctwYrhkm4XfEhWyk51Gl2QWrV1fYpXNNnlARNuNm-tahDufL6zsiVC3pwzkBjZR0DxRIBFp5PluAZGLLVpaSVOsXeCOHb-TOfITyvADf~3Fb9anf4G16VTSd9lzaPJ0tZ2xxf30c5gW56nJ5pqVLFkS2-nvIvw6Sg10MmeR4j5Hj-NRSVkeeLfhLI210gn2SoUqlkxMtp-xB02A5MH9gA80Wjg0sYUPJTbXJUUDDdCOyhB67DZY7ICFOhfUy1IeoNg12R3B0IXnca78rDX-na9jk0vxE46Ym0Lt5Gn5APr~Q9y0XoDP7Asv4cTJS7wHtftu4c~U2540ew__",
   },
   // Add more stories as needed
 ];
 
-const StoryView = () => {
+const MyStory = () => {
   const [selectedStory, setSelectedStory] = useState(stories[0]);
   //   const history = useHistory();
 
@@ -100,20 +102,13 @@ const StoryView = () => {
           <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
             <FaArrowRight className="text-white text-2xl cursor-pointer" />
           </div>
-          <div className="absolute bottom-4 left-32 transform -translate-x-1/2 bg-white text-black bg-opacity-50 px-4 py-2 rounded-lg flex items-center">
-            <input
-              type="text"
-              placeholder="Reply"
-              className="bg-transparent border-none text-black placeholder-gray-300 focus:outline-none"
-            />
+          <div className="absolute bottom-4 left-32 transform -translate-x-1/2 text-white  bg-opacity-50 px-4 py-2 rounded-lg flex items-center gap-2">
+            <FaEye />
+            <p className="font-bold">104 Person View</p>
           </div>
-          <div className="absolute bottom-4 right-4 bg-opacity-50 px-4 py-2 rounded-lg flex space-x-2">
-            <span className="text-white cursor-pointer text-2xl">👍</span>
-            <span className="text-white cursor-pointer text-2xl">❤️</span>
-            <span className="text-white cursor-pointer text-2xl">😂</span>
-            <span className="text-white cursor-pointer text-2xl">😮</span>
-            <span className="text-white cursor-pointer text-2xl">😢</span>
-            <span className="text-white cursor-pointer text-2xl">😡</span>
+          <div className="absolute bottom-4 right-4 transform bg-opacity-50 px-4 py-2 flex items-center rounded-lg space-x-2 text-white">
+            <p className="font-bold">Share story</p>
+            <FaShare />
           </div>
         </div>
       </div>
@@ -121,4 +116,4 @@ const StoryView = () => {
   );
 };
 
-export default StoryView;
+export default MyStory;

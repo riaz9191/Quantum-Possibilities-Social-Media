@@ -10,6 +10,7 @@ import StoryView from '../components/Shared/Story/StoryView'
 import ViewAllReactions from '../components/Shared/Newsfeed/ViewReaction'
 import TextStory from '../components/Shared/Story/TextStory'
 import MyStory from '../components/Shared/Story/MyStory'
+import StoryReaction from '../components/Shared/Story/StoryReaction'
 
 export const router = createBrowserRouter([
   {
@@ -52,5 +53,9 @@ export const router = createBrowserRouter([
   {
     path: '/my-story',
     element: <MyStory />,
+  },
+  {
+    path: '/story-reaction',
+    element: <StoryReaction />,
   },
 ])

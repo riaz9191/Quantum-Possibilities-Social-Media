@@ -61,7 +61,7 @@ const Story = () => {
               <span className="text-lg">Create Your Photo Story</span>
             </div>
             </Link>
-            <Link to='/create-photo-story'>
+            <Link to='/create-text-story'>
             <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg p-6 text-white cursor-pointer h-[440px]">
               <div className="bg-white text-[#307777] p-4 rounded-full mb-4">
                 <FaTextHeight className="text-4xl" />

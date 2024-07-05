@@ -8,6 +8,7 @@ import Story from '../components/Shared/Story/Story'
 import PhotoStory from '../components/Shared/Story/PhotoStory'
 import StoryView from '../components/Shared/Story/StoryView'
 import ViewAllReactions from '../components/Shared/Newsfeed/ViewReaction'
+import TextStory from '../components/Shared/Story/TextStory'
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: '/create-photo-story',
         element: <PhotoStory />,
+      },
+      {
+        path: '/create-text-story',
+        element: <TextStory />,
       },
       {
         path: '/view-photo-story',

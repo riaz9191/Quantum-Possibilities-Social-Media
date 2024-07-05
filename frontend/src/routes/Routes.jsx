@@ -7,6 +7,7 @@ import SignUp from '../pages/SignUp/SignUp'
 import Story from '../components/Shared/Story/Story'
 import PhotoStory from '../components/Shared/Story/PhotoStory'
 import StoryView from '../components/Shared/Story/StoryView'
+import ViewAllReactions from '../components/Shared/Newsfeed/ViewReaction'
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: '/view-photo-story',
         element: <StoryView />,
+      },
+      {
+        path: '/view-all-reaction',
+        element: <ViewAllReactions />,
       },
     ],
   },

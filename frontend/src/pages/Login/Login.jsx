@@ -2,23 +2,23 @@ import React from 'react';
 
 const LoginPage = () => {
   return (
-    <div className="min-h-screen flex bg-[#0B3243] p-10">
+    <div className="min-h-screen md:flex bg-[#0B3243] md:p-10">
       {/* Left section */}
-      <div className="w-1/2  text-white p-16 flex flex-col justify-center">
+      <div className="md:w-1/2  text-white p-6 md:p-16 md:flex md:flex-col justify-center">
         <h1 className="text-5xl font-bold mb-6">Welcome to the first decentralised Social Network in the world</h1>
         <p className="text-lg mb-6">
           We are the only decentralised social network that gives opportunity to monetise your time
           even if you are a normal user who doesn’t create any content and use the earning to buy
           any service or goods from the native marketplace.
         </p>
-        <button className="bg-[#307777] w-1/4 text-white py-2 px-4 rounded-lg text-lg hover:bg-green-700 transition duration-200">
+        <button className="bg-[#307777] md:w-1/4 text-white py-2 px-4 rounded-lg text-lg hover:bg-green-700 transition duration-200">
           Register Now!
         </button>
       </div>
 
       {/* Right section */}
-      <div className="w-1/2  flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="md:w-1/2 p-4 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full md:max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Login to your Account</h2>
           <form>
             <div className="mb-4">

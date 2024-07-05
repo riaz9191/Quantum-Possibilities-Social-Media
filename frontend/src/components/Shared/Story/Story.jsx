@@ -9,7 +9,7 @@ const Story = () => {
   return (
     <div className="flex h-[91vh]">
       {/* Left Side */}
-      <div className="w-3/12 bg-white p-6 border-r border-gray-200 flex flex-col justify-between">
+      <div className="w-3/12 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden ">
         <div>
           <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
           <div className="mb-6">
@@ -49,13 +49,13 @@ const Story = () => {
       </div>
 
       {/* Right Side */}
-      <div className="w-3/4 flex justify-center items-center bg-gray-100">
-        <div className="bg-white rounded-lg shadow-lg p-10 w-9/12 max-w-7xl">
+      <div className="md:w-3/4 flex justify-center items-center bg-gray-100">
+        <div className="bg-white rounded-lg shadow-lg p-10 md:w-9/12 max-w-7xl">
           <h2 className="text-xl font-bold mb-6 text-center">Select Story Type</h2>
           <div className="flex space-x-6 justify-center">
           <Link to='/create-photo-story'>
             <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-pink-500 to-red-500 rounded-lg p-6 text-white cursor-pointer h-[440px]">
-              <div className="bg-white text-[#307777] p-4 rounded-full mb-4">
+              <div className="bg-white text-[#307777] p-4 rounded-full mb-4 ">
                 <GrGallery className="text-4xl" />
               </div>
               <span className="text-lg">Create Your Photo Story</span>

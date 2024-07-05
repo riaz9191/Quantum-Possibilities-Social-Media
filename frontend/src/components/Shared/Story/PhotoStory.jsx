@@ -29,9 +29,9 @@ const PhotoStory = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-200">
+    <div className="md:flex h-screen bg-gray-200 ">
       {/* Left Side */}
-      <div className="w-1/4 bg-white p-6 border-r border-gray-200 flex flex-col justify-between">
+      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden ">
         <div>
           <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
           <div className="mb-6">
@@ -83,8 +83,8 @@ const PhotoStory = () => {
       </div>
 
       {/* Right Side */}
-      <div className="w-3/4 flex justify-center items-center bg-gray-100 p-10">
-        <div className="bg-white rounded-lg shadow-lg p-10 w-10/12 max-w-8xl">
+      <div className="md:w-3/4 flex justify-center items-center bg-gray-100 p-10">
+        <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl">
           <h2 className="text-xl font-bold mb-6 text-center">Preview</h2>
           <div className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10">
             {!selectedImage ? (

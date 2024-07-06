@@ -91,6 +91,11 @@ const LoginPage = () => {
           <p className="text-center text-gray-700 mt-6">
             Don't have an Account? <a href="/signup" className="text-blue-500">Sign up here</a>
           </p>
+        <div className=" mt-3 text-gray-400 flex">
+          <p>Login info: </p>
+          <p className='pl-3'> anik.ba@pakizatvl.com</p>
+          <p className='pl-3'> 12345678As@</p>
+        </div>
         </div>
       </div>
     </div>

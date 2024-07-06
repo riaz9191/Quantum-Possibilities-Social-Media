@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FaThumbsUp,
   FaComment,
@@ -9,6 +9,12 @@ import {
   FaThumbsUp as FaThumbsUpFilled,
   FaClosedCaptioning,
   FaCrosshairs,
+  FaTimes,
+  FaBookmark,
+  FaFlag,
+  FaBan,
+  FaBellSlash,
+  FaLink,
 } from "react-icons/fa";
 import profileImg from "../../../assets/images/posts/post1.png";
 import postImg from "../../../assets/images/user/profile.jpg";
@@ -39,6 +45,9 @@ const Post = () => {
     },
   ]);
 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
   const handleShowMoreComments = () => {
     setShowMoreComments(!showMoreComments);
   };
@@ -51,6 +60,23 @@ const Post = () => {
   const handleShowReactions = () => {
     setShowReactions(!showReactions);
   };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="bg-white p-4 shadow-md rounded-lg mb-4 mt-4">
@@ -66,14 +92,49 @@ const Post = () => {
             <p className="text-gray-500 text-sm">1h</p>
           </div>
         </div>
-        <div className="flex gap-4">
-          <FaEllipsisH />
-          <FaCrosshairs />
+        <div className="flex gap-4 relative">
+          <button onClick={toggleDropdown}>
+            <FaEllipsisH />
+          </button>
+          <FaTimes/>
+          {showDropdown && (
+            <div
+              ref={dropdownRef}
+              className="absolute top-8 right-0 w-48 border-2 bg-white rounded-md shadow-lg z-20"
+            >
+              <ul className="py-1">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaTimes className="mr-3" />
+                  <span>Hide Post</span>
+                </li>
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaBookmark className="mr-3" />
+                  <span>Bookmark</span>
+                </li>
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaFlag className="mr-3" />
+                  <span>Report</span>
+                </li>
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaBan className="mr-3" />
+                  <span>Block</span>
+                </li>
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaBellSlash className="mr-3" />
+                  <span>Turn off notifications</span>
+                </li>
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <FaLink className="mr-3" />
+                  <span>Copy Link</span>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <img src={postImg} alt="Post" className="w-full rounded-lg mb-4" />
       <div className="flex items-center justify-between mb-2">
-        <Link to='/view-all-reaction'>
+        <Link to="/view-all-reaction">
           <div className="flex items-center space-x-2">
             <span>{reactions.length}</span>
             {reactions.includes("like") && (

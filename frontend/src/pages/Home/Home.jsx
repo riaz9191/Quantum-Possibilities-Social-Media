@@ -5,9 +5,11 @@ import RightSidebar from "../../components/Shared/RightSidebar/RightSidebar";
 import Sidebar from "../../components/Shared/Sidebar/Sidebar";
 import Sidebar2 from "../../components/Shared/Sidebar2/Sidebar2";
 import axios from "axios";
+import Loader from "../../components/Shared/Loader/Loader";
 
 const Home = () => {
   const [user, setUser] = useState({ name: "", profilePic: "" });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -21,6 +23,7 @@ const Home = () => {
           name: `${response.data.user.first_name} ${response.data.user.last_name}`,
           profilePic: `https://quantumpossibilities.eu:82/uploads/${response.data.user.profile_pic}`,
         });
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -28,6 +31,10 @@ const Home = () => {
 
     fetchUserData();
   }, []);
+  
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <div className="flex gap-4">

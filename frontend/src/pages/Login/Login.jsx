@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate()
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/login', {
+        email,
+        password,
+      });
+
+      // after successful login
+      console.log(response.data);
+      // saving token to local storage
+      localStorage.setItem('token', response.data.accessToken);
+      // redirect to home page
+      navigate('/')
+    } catch (err) {
+      setError('Invalid email or password');
+    }
+  };
+
+
   return (
     <div className="min-h-screen md:flex bg-[#0B3243] md:p-10">
       {/* Left section */}
-      <div className="md:w-1/2  text-white p-6 md:p-16 md:flex md:flex-col justify-center">
+      <div className="md:w-1/2 text-white p-6 md:p-16 md:flex md:flex-col justify-center">
         <h1 className="text-5xl font-bold mb-6">Welcome to the first decentralised Social Network in the world</h1>
         <p className="text-lg mb-6">
           We are the only decentralised social network that gives opportunity to monetise your time
@@ -20,11 +47,14 @@ const LoginPage = () => {
       <div className="md:w-1/2 p-4 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full md:max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Login to your Account</h2>
-          <form>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label className="block text-gray-700">Email Address</label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="hello@example.cl"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               />
@@ -33,6 +63,8 @@ const LoginPage = () => {
               <label className="block text-gray-700">Password</label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="********"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               />
@@ -47,7 +79,7 @@ const LoginPage = () => {
                 <label htmlFor="remember" className="text-gray-700 font-semibold">Forget Password</label>
               </div>
             </div>
-            <button className="w-full bg-[#307777] text-white py-2 rounded-lg hover:bg-green-700 transition duration-200">
+            <button type="submit" className="w-full bg-[#307777] text-white py-2 rounded-lg hover:bg-green-700 transition duration-200">
               Login
             </button>
           </form>

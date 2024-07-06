@@ -5,7 +5,7 @@ const dev={
         port:process.env.PORT||5000
     },
     db:{
-        url:`mongodb+srv://${process.env.DbUserName}:${process.env.DbPassword}@cluster0.3onslcg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/qs`||"mongodb://localhost:27017/BPSADB",
+        url:`mongodb+srv://${process.env.DbUserName}:${process.env.DbPassword}@cluster0.3onslcg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`||"mongodb://localhost:27017/",
     }
 };
 

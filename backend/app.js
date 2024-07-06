@@ -1,3 +1,7 @@
+// Routes
+const authRoutes = require('./routes/auth.route');
+const storyRoutes = require('./routes/story.route');
+
 const express = require('express');
 const cors = require('cors');
 require("./config/DB");
@@ -6,9 +10,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// news
-const testRoute =require("./routes/news.route")
-app.use("/api/v1",testRoute)
+
+app.use('/api', authRoutes);
+app.use('/api', storyRoutes);
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/views/index.html");

@@ -20,6 +20,8 @@ const LoginPage = () => {
       console.log(response.data);
       // saving token to local storage
       localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('email', response.data.user.email);
+      localStorage.setItem('password', password);
       // redirect to home page
       navigate('/')
     } catch (err) {

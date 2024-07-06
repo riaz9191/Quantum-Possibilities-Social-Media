@@ -39,6 +39,7 @@ const SignupPage = () => {
     gender: '',
     acceptTerms: false,
   });
+  console.log(formData)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -66,8 +67,10 @@ const SignupPage = () => {
         day: formData.day,
         year: formData.year,
         phone: formData.phone,
-        gender: formData.gender,
+        gender: "65018b21577b4590853ef574",
+        user_role: 1, // assuming user role is required and is 1 for a normal user
       });
+      console.log(response)
 
       if (response.status === 200) {
         console.log(response)

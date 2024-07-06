@@ -13,8 +13,8 @@ const Home = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.post("https://quantumpossibilities.eu:82/api/user-login", {
-          email: "anik.ba@pakizatvl.com",
-          password: "12345678As@",
+          email: localStorage.getItem('email'),
+          password:localStorage.getItem('password'),
         });
         console.log(response.data.user);
         setUser({

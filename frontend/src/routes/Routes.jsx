@@ -11,6 +11,7 @@ import ViewAllReactions from '../components/Shared/Newsfeed/ViewReaction'
 import TextStory from '../components/Shared/Story/TextStory'
 import MyStory from '../components/Shared/Story/MyStory'
 import StoryReaction from '../components/Shared/Story/StoryReaction'
+import PrivateRoute from './PrivateRoute'
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <PrivateRoute><Home /></PrivateRoute>,
       },
       {
         path: '/story',

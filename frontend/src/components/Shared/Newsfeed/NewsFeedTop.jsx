@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { FaVideo, FaImages, FaSmile } from "react-icons/fa";
 import profileImg from "../../../assets/images/user/profile.jpg";
@@ -9,12 +10,13 @@ import user2 from "../../../assets/images/user/userr2.png";
 import user3 from "../../../assets/images/user/userr3.png";
 import { Link } from "react-router-dom";
 
-const NewsfeedTop = () => {
+const NewsfeedTop = ({user}) => {
+  console.log(user)
   return (
     <div className="p-4 bg-white shadow-md rounded-lg">
       <div className="flex items-center space-x-4 mb-4">
         <img
-          src={profileImg}
+          src={user.profilePic}
           alt="Profile"
           className="w-12 h-12 rounded-full"
         />
@@ -42,7 +44,7 @@ const NewsfeedTop = () => {
       <div className="flex space-x-2 overflow-x-auto">
         <div className="relative min-w-[25%]">
           <img
-            src={profileImg}
+            src={user.profilePic}
             alt="Profile"
             className="w-full h-full rounded-lg object-cover"
           />

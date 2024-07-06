@@ -11,8 +11,30 @@ import {
 import Container from "../Container";
 import logoImg from "../../../assets/images/logo/logo.png";
 import userImg from "../../../assets/images/user/user1.png"; // Replace with your user image path
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
+  const [user, setUser] = useState({ name: "", profilePic: "" });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.post("https://quantumpossibilities.eu:82/api/user-login", {
+          email: "anik.ba@pakizatvl.com",
+          password: "12345678As@",
+        });
+        console.log(response.data.user);
+        setUser({
+          profilePic: `https://quantumpossibilities.eu:82/uploads/${response.data.user.profile_pic}`,
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
@@ -63,9 +85,9 @@ const Navbar = () => {
               <Link to="/messages">
                 <FaComments className="text-gray-500 text-2xl" />
               </Link>
-              <Link to="/profile">
+              <Link to="/login">
                 <img
-                  src={userImg}
+                  src={user.profilePic}
                   alt="User"
                   className="w-10 h-10 rounded-full"
                 />

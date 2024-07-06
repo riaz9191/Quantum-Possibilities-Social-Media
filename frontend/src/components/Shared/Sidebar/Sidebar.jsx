@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   FaUser,
   FaUsers,
@@ -10,16 +11,17 @@ import {
 } from "react-icons/fa";
 import userImg from "../../../assets/images/user/user1.png";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
+  // console.log(user);
   return (
     <div className="w-2/12 pl-4 pt-2 shadow-2xl h-screen fixed bg-white">
       <div className="flex items-center space-x-4 mb-4 ">
         <img
-          src={userImg}
+          src={user.profilePic}
           alt="James Rodigan"
           className="w-12 h-12 rounded-full"
         />
-        <span className="font-semibold text-lg">James Rodigan</span>
+        <span className="font-semibold text-lg">{user.name}</span>
       </div>
       <ul className="space-y-4">
         <li className="flex items-center space-x-3 text-[#307777]">

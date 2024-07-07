@@ -54,8 +54,8 @@ export const authenticate = (response, next) => {
 // access user info from localstorage rr
 export const isAuth = () => {
     if (window !== "undefined") {
-        if (getCookie("token")) {
-            const cookieChecked = getCookie("token");
+        if (getCookie("accessToken")) {
+            const cookieChecked = getCookie("accessToken");
             if (cookieChecked && cookieChecked != "undefined") {
                 if (
                     localStorage.getItem("email") &&

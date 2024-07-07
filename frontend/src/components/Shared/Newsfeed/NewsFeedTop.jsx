@@ -11,7 +11,7 @@ import user3 from "../../../assets/images/user/userr3.png";
 import { Link } from "react-router-dom";
 
 const NewsfeedTop = ({user}) => {
-  console.log(user)
+  // console.log(user)
   return (
     <div className="p-4 bg-white shadow-md rounded-lg">
       <div className="flex items-center space-x-4 mb-4">
@@ -41,8 +41,8 @@ const NewsfeedTop = ({user}) => {
           <span>Feeling/activity</span>
         </button>
       </div>
-      <div className="flex space-x-2 overflow-x-auto">
-        <div className="relative min-w-[25%]">
+      <div className="flex space-x-2 w-full">
+        <div className="relative min-w-[15%]">
           <img
             src={user.profilePic}
             alt="Profile"

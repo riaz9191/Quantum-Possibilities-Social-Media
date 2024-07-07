@@ -18,7 +18,7 @@ const Home = () => {
           email: localStorage.getItem('email'),
           password:localStorage.getItem('password'),
         });
-        console.log(response.data.user);
+        // console.log(response.data.user);
         setUser({
           name: `${response.data.user.first_name} ${response.data.user.last_name}`,
           profilePic: `https://quantumpossibilities.eu:82/uploads/${response.data.user.profile_pic}`,

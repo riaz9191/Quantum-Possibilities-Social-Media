@@ -19,7 +19,8 @@ const LoginPage = () => {
       // after successful login
       console.log(response.data);
       // saving token to local storage
-      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
       localStorage.setItem('email', response.data.user.email);
       localStorage.setItem('password', password);
       // redirect to home page

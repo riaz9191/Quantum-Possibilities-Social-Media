@@ -6,11 +6,12 @@ const PrivateRoute = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(true);
 
   const checkAuthentication = () => {
-    const token = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
     const email = localStorage.getItem("email");
     const password = localStorage.getItem("password");
 
-    if (token && email && password) {
+    if (accessToken && email && password) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);

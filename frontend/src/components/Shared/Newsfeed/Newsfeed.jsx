@@ -5,8 +5,8 @@ const Newsfeed = ({user}) => {
   return (
     <div>
       <NewsfeedTop user={user}/>
-      <Post/>
-      <Post/>
+      <Post user={user}/>
+      
     </div>
   )
 }

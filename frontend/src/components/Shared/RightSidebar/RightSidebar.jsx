@@ -11,22 +11,22 @@ const RightSidebar = () => {
       <div className="mb-4">
         <h3 className="font-semibold mb-2">Sponsored</h3>
         <div className="space-y-2">
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-32">
             <img
               src={add1}
               alt="Ad 1"
-              className="w-60 h-40 rounded-2xl object-cover"
+              className=" h-32 rounded-2xl object-cover"
             />
             <div className="flex flex-col justify-center">
               <p>আপনার অফিসের লাঞ্চ</p>
-              <p className="text-[#9FA2A6]">homefectionery.com</p>
+              <p className="text-[#151617]">homefectionery.com</p>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-24">
             <img
               src={add2}
               alt="Ad 1"
-              className="w-36 h-40 rounded-2xl object-cover"
+              className=" h-32 rounded-2xl object-cover"
             />
             <div className="flex flex-col justify-center">
               <p>SEMrush এর সাথে Ubersuggest</p>

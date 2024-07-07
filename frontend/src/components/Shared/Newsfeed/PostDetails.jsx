@@ -16,6 +16,7 @@ import {
   FaLink,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
 
 const PostDetails = ({
   post,
@@ -25,7 +26,33 @@ const PostDetails = ({
 }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showMoreComments, setShowMoreComments] = useState(false);
+  const [visibleComments, setVisibleComments] = useState(post.comments);
+  const [hasMoreComments, setHasMoreComments] = useState(true);
   const dropdownRef = useRef(null);
+
+  const fetchMoreComments = async () => {
+    try {
+      const response = await axios.get(
+        `https://quantumpossibilities.eu:82/api/get-comments?postId=${post._id}&pageNo=2&pageSize=5`, // Adjust the pageNo and pageSize as needed
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      const newComments = response.data.comments;
+      if (newComments.length > 0) {
+        setVisibleComments([...visibleComments, ...newComments]);
+      } else {
+        setHasMoreComments(false);
+      }
+    } catch (error) {
+      console.error("Error fetching more comments:", error);
+    }
+  };
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -72,8 +99,8 @@ const PostDetails = ({
               )}
             </p>
             <p className="text-gray-500 text-sm">
-              {new Date(post.createdAt).toLocaleString("en-US", {
-                timeZone: "Asia/Dhaka",
+              {formatDistanceToNow(new Date(post.createdAt), {
+                addSuffix: true,
               })}
             </p>
           </div>
@@ -137,16 +164,20 @@ const PostDetails = ({
       <div className="flex items-center justify-between mb-2">
         <Link to="/view-all-reaction">
           <div className="flex items-center space-x-2 text-lg">
-            <span>{post.reactionCount}</span>
-            {post.reactionTypeCountsByPost.some(
-              (reaction) => reaction.reaction_type === "like"
-            ) && <FaThumbsUpFilled className="text-blue-500" />}
-            {post.reactionTypeCountsByPost.some(
-              (reaction) => reaction.reaction_type === "love"
-            ) && <FaHeart className="text-red-500" />}
-            {post.reactionTypeCountsByPost.some(
-              (reaction) => reaction.reaction_type === "haha"
-            ) && <FaLaugh className="text-yellow-500" />}
+            {post.reactionCount > 0 && (
+              <>
+                <span>{post.reactionCount}</span>
+                {post.reactionTypeCountsByPost.some(
+                  (reaction) => reaction.reaction_type === "like"
+                ) && <FaThumbsUpFilled className="text-blue-500" />}
+                {post.reactionTypeCountsByPost.some(
+                  (reaction) => reaction.reaction_type === "love"
+                ) && <FaHeart className="text-red-500" />}
+                {post.reactionTypeCountsByPost.some(
+                  (reaction) => reaction.reaction_type === "haha"
+                ) && <FaLaugh className="text-yellow-500" />}
+              </>
+            )}
           </div>
         </Link>
         <div className="flex items-center space-x-4">
@@ -171,6 +202,61 @@ const PostDetails = ({
           <span>Share</span>
         </button>
       </div>
+
+      {/* Comments Section */}
+      <div className="mt-4">
+        {post.comments.map((comment) => (
+          <div key={comment._id} className="mb-2">
+            <div className="flex items-center space-x-2">
+              <img
+                src={`https://quantumpossibilities.eu:82/uploads/${comment.user_id.profile_pic}`}
+                alt="User"
+                className="w-8 h-8 rounded-full"
+              />
+              <div className="flex flex-col">
+                <div className="bg-gray-100 p-2 rounded-lg flex-1">
+                  <p className="font-semibold">{`${comment.user_id.first_name} ${comment.user_id.last_name}`}</p>
+                  <p className="text-sm">{comment.comment_name}</p>
+                </div>
+                <div className="flex fcol items-center space-x-2 text-sm text-gray-500">
+                <span>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</span>
+
+                  <button className="font-semibold">Like</button>
+                  <button className="font-semibold">Reply</button>
+                </div>
+              </div>
+            </div>
+            {comment.replies.length > 0 && (
+              <div className="ml-10 mt-2">
+                <button
+                  className="text-sm text-gray-500"
+                  onClick={() => setShowMoreComments(!showMoreComments)}
+                >
+                  View {comment.replies.length} Reply
+                </button>
+                {showMoreComments &&
+                  comment.replies.map((reply) => (
+                    <div
+                      key={reply._id}
+                      className="flex items-center space-x-2 mt-2"
+                    >
+                      <img
+                        src={`https://quantumpossibilities.eu:82/uploads/${reply.replies_user_id.profile_pic}`}
+                        alt="User"
+                        className="w-8 h-8 rounded-full"
+                      />
+                      <div className="bg-gray-100 p-2 rounded-lg flex-1">
+                        <p className="font-semibold">{`${reply.replies_user_id.first_name} ${reply.replies_user_id.last_name}`}</p>
+                        <p className="text-sm">{reply.replies_comment_name}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       <div className="flex items-center mt-4">
         <img
           src={user.profilePic}

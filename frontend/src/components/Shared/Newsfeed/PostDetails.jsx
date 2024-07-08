@@ -212,14 +212,23 @@ const PostDetails = ({
                 src={`https://quantumpossibilities.eu:82/uploads/${comment.user_id.profile_pic}`}
                 alt="User"
                 className="w-8 h-8 rounded-full"
+                onError={(e) =>
+                  (e.target.src =
+                    "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
+                }
               />
+
               <div className="flex flex-col">
                 <div className="bg-gray-100 p-2 rounded-lg flex-1">
                   <p className="font-semibold">{`${comment.user_id.first_name} ${comment.user_id.last_name}`}</p>
                   <p className="text-sm">{comment.comment_name}</p>
                 </div>
                 <div className="flex fcol items-center space-x-2 text-sm text-gray-500">
-                <span>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</span>
+                  <span>
+                    {formatDistanceToNow(new Date(comment.createdAt), {
+                      addSuffix: true,
+                    })}
+                  </span>
 
                   <button className="font-semibold">Like</button>
                   <button className="font-semibold">Reply</button>

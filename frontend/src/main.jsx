@@ -18,7 +18,8 @@ import React from "react";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <div className="">
-      <Toaster />
+      <Toaster position="bottom-right" />
+      {/* <Toaster /> */}
       <RouterProvider router={router} />
     </div>
   </React.StrictMode>

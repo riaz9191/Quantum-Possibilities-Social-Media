@@ -148,7 +148,7 @@ const PostDetails = ({
       {post.media.length > 0 && (
         <>
           <img
-            src={`https://quantumpossibilities.eu:82/uploads/post/${post.media[0].media}`}
+            src={`https://quantumpossibilities.eu:82/uploads/posts/${post.media[0].media}`}
             alt="Post"
             className="w-full rounded-lg mb-4"
           />

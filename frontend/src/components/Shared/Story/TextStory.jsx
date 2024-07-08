@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaPalette, FaLock, FaGlobe, FaUsers, FaTimes } from "react-icons/fa";
 import { SketchPicker } from "react-color";
 import { Link } from "react-router-dom";
+import Draggable from "react-draggable";
 
 const TextStory = () => {
   const [backgroundColor, setBackgroundColor] = useState("#334BC6");
@@ -13,126 +14,111 @@ const TextStory = () => {
   const [privacy, setPrivacy] = useState("Public");
   const [isPrivacyOptionsVisible, setIsPrivacyOptionsVisible] = useState(false);
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
+  const [overlayText, setOverlayText] = useState("");
 
   const handleTextChange = (e) => {
+    setOverlayText(e.target.value);
     if (!hasStartedTyping && e.target.value !== "") {
       setHasStartedTyping(true);
-    }
-    else if(e.target.value == ""){
-        setHasStartedTyping(false);
+    } else if (e.target.value === "") {
+      setHasStartedTyping(false);
     }
   };
 
+  const handleTextClear = () => {
+    setOverlayText('');
+    setHasStartedTyping(false);
+  };
+
   return (
-    <div className="flex items-center justify-center bg-gray-200 min-h-screen">
-      <div className="relative w-full bg-white rounded-lg shadow-lg">
-        <div
-          className="relative w-full h-screen flex items-center justify-center"
-          style={{ backgroundColor }}
-        >
-          <textarea
-            className="w-full h-full p-8 text-4xl font-semibold text-center focus:outline-none bg-transparent resize-none placeholder-center"
-            style={{ color: textColor }}
-            placeholder="Start Typing"
-            autoFocus
-            onChange={handleTextChange}
-          />
-          <div className="absolute top-4 left-4">
-            <Link to="/">
-              <button className="text-white text-xl">
-                <FaTimes />
-              </button>
-            </Link>
-          </div>
-          <div className="absolute bottom-4 left-4 flex">
+    <div className="md:flex h-screen bg-gray-200">
+      {/* Left Side */}
+      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between">
+        <div>
+          <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
+          <div className="relative mb-6">
+            <textarea
+              className="w-full h-40 border border-gray-300 rounded p-2"
+              placeholder="Start Typing"
+              value={overlayText}
+              onChange={handleTextChange}
+            />
             <button
-              className="text-white text-xl shadow-2xl flex flex-col justify-center items-center"
-              onClick={() =>
-                setIsPrivacyOptionsVisible(!isPrivacyOptionsVisible)
-              }
+              className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full"
+              onClick={handleTextClear}
             >
-              <FaLock />
-              <p>Privacy</p>
-            </button>
-            {hasStartedTyping && (
-              <>
-                <button
-                  className="text-white text-xl ml-6"
-                  onClick={() =>
-                    setIsBackgroundColorPickerVisible(
-                      !isBackgroundColorPickerVisible
-                    )
-                  }
-                >
-                  <FaPalette />
-                </button>
-                <button
-                  className="bg-gray-300 ml-4 text-gray-600 py-2 px-4 rounded-lg"
-                  onClick={() =>
-                    setIsTextColorPickerVisible(!isTextColorPickerVisible)
-                  }
-                >
-                  Text Color
-                </button>
-              </>
-            )}
-          </div>
-          <div className="absolute bottom-4 right-4">
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
-              onClick={() => alert("Posted!")}
-            >
-              Post
+              <FaTimes />
             </button>
           </div>
-          {isBackgroundColorPickerVisible && (
-            <div className="absolute bottom-16 left-4">
-              <SketchPicker
-                color={backgroundColor}
-                onChangeComplete={(color) => setBackgroundColor(color.hex)}
-              />
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Background Color</label>
+            <div className="flex space-x-2">
+              {['#334BC6', 'green', 'red', 'yellow', 'purple', 'orange', 'black', 'white'].map((color) => (
+                <button
+                  key={color}
+                  className={`w-6 h-6 rounded-full ${backgroundColor === color ? 'border-2 border-black' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => setBackgroundColor(color)}
+                />
+              ))}
             </div>
-          )}
-          {isTextColorPickerVisible && (
-            <div className="absolute bottom-16 right-4">
-              <SketchPicker
-                color={textColor}
-                onChangeComplete={(color) => setTextColor(color.hex)}
-              />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Text Color</label>
+            <div className="flex space-x-2">
+              {['white', 'black', 'blue', 'red', 'yellow', 'green', 'purple', 'orange'].map((color) => (
+                <button
+                  key={color}
+                  className={`w-6 h-6 rounded-full ${textColor === color ? 'border-2 border-black' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => setTextColor(color)}
+                />
+              ))}
             </div>
-          )}
-          {isPrivacyOptionsVisible && (
-            <div className="absolute bottom-16 left-4 bg-white p-2 rounded-lg shadow-lg">
-              <div
-                className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => setPrivacy("Public")}
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="storyType">
+              Select Story Type
+            </label>
+            <div className="relative">
+              <select
+                id="storyType"
+                value={privacy}
+                onChange={(e) => setPrivacy(e.target.value)}
+                className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
               >
-                <FaGlobe className="text-blue-500" />
-                <span>Public</span>
-              </div>
-              <div
-                className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => setPrivacy("Friends")}
-              >
-                <FaUsers className="text-green-500" />
-                <span>Friends</span>
-              </div>
-              <div
-                className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => setPrivacy("Only Me")}
-              >
-                <FaLock className="text-gray-500" />
-                <span>Only Me</span>
+                <option value="Public">Public</option>
+                <option value="Friends">Friends</option>
+                <option value="Only Me">Only Me</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z" />
+                </svg>
               </div>
             </div>
-          )}
+          </div>
         </div>
-        <div className="flex items-center justify-between mt-4 p-4">
-          <div className="text-gray-600">
-            {privacy === "Public" && <FaGlobe className="inline-block mr-2" />}
-            {privacy === "Friends" && <FaUsers className="inline-block mr-2" />}
-            {privacy === "Only Me" && <FaLock className="inline-block mr-2" />}
-            {privacy}
+        <div>
+          <button className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full">
+            Create Story
+          </button>
+        </div>
+      </div>
+
+      {/* Right Side */}
+      <div className="md:w-3/4 md:flex justify-center items-center bg-gray-100 p-10">
+        <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl">
+          <h2 className="text-xl font-bold mb-6 text-center">Preview</h2>
+          <div
+            className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10"
+            style={{ backgroundColor }}
+          >
+            <div className="absolute inset-0 flex justify-center items-center">
+              <span className="text-center text-4xl font-bold" style={{ color: textColor }}>
+                {overlayText}
+              </span>
+            </div>
           </div>
         </div>
       </div>

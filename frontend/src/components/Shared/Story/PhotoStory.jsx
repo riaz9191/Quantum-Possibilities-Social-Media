@@ -1,15 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { FaPlus, FaTimes } from 'react-icons/fa';
-import Slider from 'react-slider';
-import Draggable from 'react-draggable';
+import React, { useState, useRef } from "react";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import Slider from "react-slider";
+import Draggable from "react-draggable";
+import axios from "axios";
 
 const PhotoStory = () => {
-  const [storyType, setStoryType] = useState('Public');
-  const [backgroundColor, setBackgroundColor] = useState('');
+  const [storyType, setStoryType] = useState("Public");
+  const [backgroundColor, setBackgroundColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [rotation, setRotation] = useState(0);
-  const [overlayText, setOverlayText] = useState('');
-  const [textVisible, setTextVisible] = useState(true);
+  const [overlayText, setOverlayText] = useState("");
+  const [isDraggable, setIsDraggable] = useState(true);
+  const [textColor, setTextColor] = useState("#FFFFFF");
   const imageRef = useRef(null);
 
   const handleImageChange = (e) => {
@@ -31,8 +33,49 @@ const PhotoStory = () => {
     setRotation(value);
   };
 
+  const handleTextClear = () => {
+    setOverlayText("");
+  };
+
+  const handleSubmit = async () => {
+    try {
+      let imageUrl = "";
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("image", selectedImage.split(",")[1]);
+
+        const imgbbResponse = await axios.post(
+          "https://api.imgbb.com/1/upload?key=16ebe1b9436642b3808ff28d78a39563",
+          formData
+        );
+        imageUrl = imgbbResponse.data.data.url;
+      }
+
+      const storyData = {
+        user: "60d0fe4f5311236168a109ca", 
+        type: "photo",
+        text: overlayText,
+        image: imageUrl,
+        backgroundColor,
+        textColor,
+        privacy: storyType,
+      };
+      console.log(storyData);
+      const response = await axios.post(
+        "http://localhost:5000/api/stories",
+        storyData
+      );
+
+      console.log("Story saved:", response.data);
+      // Show success message or redirect as needed
+    } catch (error) {
+      console.error("Error saving story:", error);
+      // Show error message as needed
+    }
+  };
+
   return (
-    <div className="md:flex h-screen bg-gray-200 ">
+    <div className="md:flex h-screen bg-gray-200">
       {/* Left Side */}
       <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden">
         <div>
@@ -41,16 +84,36 @@ const PhotoStory = () => {
             <textarea
               className="w-full h-40 border border-gray-300 rounded p-2"
               placeholder="Start Typing"
+              value={overlayText}
               onChange={(e) => setOverlayText(e.target.value)}
             />
+            <button
+              className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full"
+              onClick={handleTextClear}
+            >
+              <FaTimes />
+            </button>
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Background Color</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Background Color
+            </label>
             <div className="flex space-x-2">
-              {['blue', 'green', 'red', 'yellow', 'purple', 'orange', 'black', 'white'].map((color) => (
+              {[
+                "blue",
+                "green",
+                "red",
+                "yellow",
+                "purple",
+                "orange",
+                "black",
+                "white",
+              ].map((color) => (
                 <button
                   key={color}
-                  className={`w-6 h-6 rounded-full ${backgroundColor === color ? 'border-2 border-black' : ''}`}
+                  className={`w-6 h-6 rounded-full ${
+                    backgroundColor === color ? "border-2 border-black" : ""
+                  }`}
                   style={{ backgroundColor: color }}
                   onClick={() => setBackgroundColor(color)}
                 />
@@ -58,7 +121,21 @@ const PhotoStory = () => {
             </div>
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="storyType">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Text Color
+            </label>
+            <input
+              type="color"
+              value={textColor}
+              onChange={(e) => setTextColor(e.target.value)}
+              className="w-full h-10 border border-gray-300 rounded"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="storyType"
+            >
               Select Story Type
             </label>
             <div className="relative">
@@ -72,7 +149,11 @@ const PhotoStory = () => {
                 <option value="Private">Private</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
                   <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z" />
                 </svg>
               </div>
@@ -80,7 +161,10 @@ const PhotoStory = () => {
           </div>
         </div>
         <div>
-          <button className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full">
+          <button
+            className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full"
+            onClick={handleSubmit}
+          >
             Create Story
           </button>
         </div>
@@ -104,7 +188,9 @@ const PhotoStory = () => {
                 />
                 <div className="flex flex-col items-center justify-center">
                   <FaPlus className="text-4xl text-gray-500" />
-                  <span className="mt-2 text-gray-500">Select photo to crop and rotate</span>
+                  <span className="mt-2 text-gray-500">
+                    Select photo to crop and rotate
+                  </span>
                 </div>
               </>
             ) : (
@@ -122,18 +208,17 @@ const PhotoStory = () => {
                 >
                   <FaTimes />
                 </button>
-                {overlayText && textVisible && (
-                  <Draggable>
-                    <div className="absolute top-0 left-0">
-                      <div className="relative">
-                        <span className="text-white text-4xl font-bold">{overlayText}</span>
-                        <button
-                          onClick={() => setTextVisible(false)}
-                          className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-                        >
-                          <FaTimes />
-                        </button>
-                      </div>
+                {overlayText && (
+                  <Draggable disabled={!isDraggable} bounds="parent">
+                    <div
+                      className="absolute"
+                      style={{
+                        fontSize: "24px",
+                        color: textColor,
+                        textAlign: "center",
+                      }}
+                    >
+                      <span>{overlayText}</span>
                     </div>
                   </Draggable>
                 )}
@@ -151,9 +236,13 @@ const PhotoStory = () => {
                 max={180}
                 step={1}
                 onChange={handleRotationChange}
-                renderThumb={(props, state) => <div {...props} className="custom-thumb"></div>}
+                renderThumb={(props, state) => (
+                  <div {...props} className="custom-thumb"></div>
+                )}
               />
-              <div className="text-center mt-2">Select photo to crop and rotate</div>
+              <div className="text-center mt-2">
+                Select photo to crop and rotate
+              </div>
             </div>
           )}
         </div>

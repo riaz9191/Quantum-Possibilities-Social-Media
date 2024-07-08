@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import Slider from 'react-slider';
+import Draggable from 'react-draggable';
 
 const PhotoStory = () => {
   const [storyType, setStoryType] = useState('Public');
   const [backgroundColor, setBackgroundColor] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [rotation, setRotation] = useState(0);
+  const [overlayText, setOverlayText] = useState('');
+  const [textVisible, setTextVisible] = useState(true);
   const imageRef = useRef(null);
 
   const handleImageChange = (e) => {
@@ -31,13 +34,14 @@ const PhotoStory = () => {
   return (
     <div className="md:flex h-screen bg-gray-200 ">
       {/* Left Side */}
-      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden ">
+      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden">
         <div>
           <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
           <div className="mb-6">
             <textarea
               className="w-full h-40 border border-gray-300 rounded p-2"
               placeholder="Start Typing"
+              onChange={(e) => setOverlayText(e.target.value)}
             />
           </div>
           <div className="mb-6">
@@ -86,7 +90,10 @@ const PhotoStory = () => {
       <div className="md:w-3/4 md:flex justify-center items-center bg-gray-100 p-10">
         <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl">
           <h2 className="text-xl font-bold mb-6 text-center">Preview</h2>
-          <div className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10">
+          <div
+            className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10"
+            style={{ backgroundColor }}
+          >
             {!selectedImage ? (
               <>
                 <input
@@ -115,6 +122,21 @@ const PhotoStory = () => {
                 >
                   <FaTimes />
                 </button>
+                {overlayText && textVisible && (
+                  <Draggable>
+                    <div className="absolute top-0 left-0">
+                      <div className="relative">
+                        <span className="text-white text-4xl font-bold">{overlayText}</span>
+                        <button
+                          onClick={() => setTextVisible(false)}
+                          className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+                        >
+                          <FaTimes />
+                        </button>
+                      </div>
+                    </div>
+                  </Draggable>
+                )}
               </>
             )}
           </div>

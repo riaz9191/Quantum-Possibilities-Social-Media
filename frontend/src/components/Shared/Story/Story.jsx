@@ -1,75 +1,37 @@
-import React, { useState } from "react";
-import { FaGalacticRepublic, FaTextHeight } from "react-icons/fa";
+import React from "react";
+import { FaTextHeight, FaTimes } from "react-icons/fa";
 import { GrGallery } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
 const Story = () => {
-  const [storyType, setStoryType] = useState("Public");
-
   return (
-    <div className="flex h-[91vh]">
-      {/* Left Side */}
-      <div className="w-3/12 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden ">
-        <div>
-          <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="storyType"
-            >
-              Select Story Type
-            </label>
-            <div className="relative">
-              <select
-                id="storyType"
-                value={storyType}
-                onChange={(e) => setStoryType(e.target.value)}
-                className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="Public">Public</option>
-                <option value="Private">Private</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <button className="bg-[#307777] text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full">
-            Create Story
-          </button>
-        </div>
-      </div>
+    <div className="relative flex h-[91vh] bg-gray-100 justify-center items-center">
+      {/* Close Button */}
+      <Link to="/" className="absolute top-4 left-4">
+        <button className="text-gray-600 text-2xl p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition duration-300">
+          <FaTimes />
+        </button>
+      </Link>
 
-      {/* Right Side */}
-      <div className="md:w-3/4 flex justify-center items-center bg-gray-100">
-        <div className="bg-white rounded-lg shadow-lg p-10 md:w-9/12 max-w-7xl">
-          <h2 className="text-xl font-bold mb-6 text-center">Select Story Type</h2>
-          <div className="flex space-x-6 justify-center">
-          <Link to='/create-photo-story'>
+      <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg p-10 mx-4">
+        <h2 className="text-2xl font-bold mb-6 text-center">Select Story Type</h2>
+        <div className="flex space-x-6 justify-center">
+          <Link to="/create-photo-story">
             <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-pink-500 to-red-500 rounded-lg p-6 text-white cursor-pointer h-[440px]">
-              <div className="bg-white text-[#307777] p-4 rounded-full mb-4 ">
+              <div className="bg-white text-[#307777] p-4 rounded-full mb-4">
                 <GrGallery className="text-4xl" />
               </div>
               <span className="text-lg">Create Your Photo Story</span>
             </div>
-            </Link>
-            <Link to='/create-text-story'>
+          </Link>
+          <Link to="/create-text-story">
             <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg p-6 text-white cursor-pointer h-[440px]">
               <div className="bg-white text-[#307777] p-4 rounded-full mb-4">
                 <FaTextHeight className="text-4xl" />
               </div>
               <span className="text-lg">Create Your Text Story</span>
             </div>
-            </Link>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

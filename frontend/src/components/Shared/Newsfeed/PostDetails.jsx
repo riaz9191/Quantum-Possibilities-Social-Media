@@ -34,7 +34,7 @@ const PostDetails = ({
   const fetchMoreComments = async () => {
     try {
       const response = await axios.get(
-        `https://quantumpossibilities.eu:82/api/get-comments?postId=${post._id}&pageNo=2&pageSize=5`, // Adjust the pageNo and pageSize as needed
+        `https://quantumpossibilities.eu:82/api/get-comments?postId=${post._id}&pageNo=2&pageSize=5`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -162,7 +162,7 @@ const PostDetails = ({
         </>
       )}
       <div className="flex items-center justify-between mb-2">
-        <Link to="/view-all-reaction">
+        <Link to="/view-all-reactions">
           <div className="flex items-center space-x-2 text-lg">
             {post.reactionCount > 0 && (
               <>

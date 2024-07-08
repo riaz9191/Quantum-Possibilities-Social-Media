@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       //   element: <TextStory />,
       // },
       {
-        path: "/view-photo-story",
+        path: "/view-story/:id",
         element: <StoryView />,
       },
       {

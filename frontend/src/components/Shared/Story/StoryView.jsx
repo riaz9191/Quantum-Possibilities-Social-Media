@@ -1,104 +1,211 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaArrowLeft,
   FaArrowRight,
   FaTimes,
   FaEllipsisH,
+  FaPause,
+  FaPlay,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { formatDistanceToNow } from "date-fns";
 
-const stories = [
-  // Add your story data here
-  {
-    id: 1,
-    name: "Ayesha Akter Mitu",
-    time: "21 hour",
-    image: "https://via.placeholder.com/50",
-    mainImage:
-      "https://s3-alpha-sig.figma.com/img/0d63/5630/71ee0be67a603e99a26544662f2b5442?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JRFqL855BK5JIx4zmncZBryQ9MWYuNPNotaJ2GI-B-ps1OkibiJE7cCP-f-BPTtFSoA5dFALj--YsFGj4RSqd2~WWEhyDIE7IIz1xg180r4zsvr6EtwE778YfYZ8I3joP40EXoocG1v~bxMBgGHd2p0q0EvV~WuFZa1m8p0ROS8ZXze0Cg0FjdHNtCwITjGBW3XgiFawHe7mP3Xe-Fpcjmp37REWlqSYYedU0dNawJd95eLqplwIk3hTcksYogUInF~T2wnr0Mlym4S03HiOK5zwRX2KSc4WHCQ6W4-7k0ojCiqsBOznCItvUK4FHW95Rr4VjBPIyeoK88fBwofCig__",
-  },
-  // Add more stories as needed
-];
+const dummyProfilePic = "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg";
+const dummyName = "John Doe";
 
 const StoryView = () => {
-  const [selectedStory, setSelectedStory] = useState(stories[0]);
-  //   const history = useHistory();
+  const { id } = useParams();
+  const [selectedStory, setSelectedStory] = useState(null);
+  const [stories, setStories] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      //   history.push('/');
-    }, 10000); // Redirect after 15 seconds
+    const fetchStories = async () => {
+      try {
+        const response = await axios.get("https://qsbackend-riaz9191s-projects.vercel.app/api/stories");
+        setStories(response.data);
+        const storyIndex = response.data.findIndex((story) => story._id === id);
+        setCurrentIndex(storyIndex);
+        setSelectedStory(response.data[storyIndex]);
+      } catch (error) {
+        console.error("Error fetching stories:", error);
+      }
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
+    fetchStories();
+  }, [id]);
+
+  useEffect(() => {
+    let timer;
+    if (!isPaused) {
+      timer = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            handleNextStory();
+            return 0;
+          }
+          return prevProgress + 0.5;
+        });
+      }, 30);
+    }
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const handleNextStory = () => {
+    const nextIndex = (currentIndex + 1) % stories.length;
+    setCurrentIndex(nextIndex);
+    setSelectedStory(stories[nextIndex]);
+    setProgress(0);
+  };
+
+  const handlePreviousStory = () => {
+    const prevIndex = (currentIndex - 1 + stories.length) % stories.length;
+    setCurrentIndex(prevIndex);
+    setSelectedStory(stories[prevIndex]);
+    setProgress(0);
+  };
+
+  const handlePausePlay = () => {
+    setIsPaused(!isPaused);
+  };
+
+  const handleDeleteStory = async () => {
+    try {
+      await axios.delete(`https://qsbackend-riaz9191s-projects.vercel.app/api/stories/${selectedStory._id}`);
+      setStories(stories.filter(story => story._id !== selectedStory._id));
+      setShowDropdown(false);
+      handleNextStory();
+    } catch (error) {
+      console.error("Error deleting story:", error);
+    }
+  };
+  const dropdownRef = useRef(null);
+const handleClickOutside = (event) => {
+  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    setShowDropdown(false);
+  }
+};
+
+useEffect(() => {
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+  if (!selectedStory) return <div>Loading...</div>;
 
   return (
     <div className="md:flex h-screen bg-gray-900">
       {/* Left Side - Sidebar */}
-      <div className="w-1/4 bg-white p-4 overflow-y-auto hidden md:block  ">
+      <div className="w-1/4 bg-white p-4 overflow-y-auto hidden md:block">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">All stories</h2>
           <Link to="/">
-            {" "}
             <FaTimes className="text-gray-500 cursor-pointer" />
           </Link>
         </div>
         {stories.map((story) => (
           <div
-            key={story.id}
+            key={story._id}
             className="flex items-center mb-4 cursor-pointer"
-            onClick={() => setSelectedStory(story)}
+            onClick={() => {
+              setSelectedStory(story);
+              setCurrentIndex(stories.indexOf(story));
+              setProgress(0);
+            }}
           >
             <img
-              src={story.image}
-              alt={story.name}
-              className="w-10 h-10 rounded-full mr-4"
+              src={story.user.profilePic || dummyProfilePic}
+              alt={story.user.username}
+              className="w-10 h-10 rounded-full mr-4 border-2 border-green-500"
             />
             <div>
-              <p className="text-sm font-bold">{story.name}</p>
-              <p className="text-xs text-gray-500">{story.time}</p>
+              <p className="text-sm font-bold">Abdul</p>
+              <p className="text-xs text-gray-500"> {formatDistanceToNow(new Date(story.createdAt), {
+                      addSuffix: true,
+                    })}</p>
             </div>
+            <div className="pl-20">❤️❤️❤️</div>
           </div>
         ))}
       </div>
 
       {/* Right Side - Story Viewer */}
-      <div className="md:w-3/4 md:flex  justify-center items-center bg-black relative">
+      <div className="md:w-3/4 md:flex justify-center items-center bg-black relative w-full">
         <div className="w-full mx-auto max-w-lg relative">
-          <div className="absolute top-4  left-4 flex items-center">
+          <div className="absolute top-4 left-4 flex items-center z-50">
             <img
-              src={selectedStory.image}
-              alt={selectedStory.name}
-              className="w-10 h-10 rounded-full mr-2 "
+              src={selectedStory.user.profilePic || dummyProfilePic}
+              alt={selectedStory.user.username}
+              className="w-10 h-10 rounded-full mr-2"
             />
             <div className="text-white">
-              <p className="font-bold">{selectedStory.name}</p>
-              <p className="text-xs">{selectedStory.time} Ago</p>
+              <p className="font-bold">{dummyName}</p>
+              <p className="text-xs">{new Date(selectedStory.createdAt).toLocaleString()}</p>
             </div>
           </div>
-          <div className="absolute top-4 right-4 flex items-center">
-            <FaEllipsisH className="text-white cursor-pointer mr-4" />
+          <div className="absolute z-50 top-4 right-4 flex items-center ">
+            <FaEllipsisH className="text-white cursor-pointer mr-4" onClick={() => setShowDropdown(!showDropdown)} />
+            {showDropdown && (
+              <div   ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50"
+              >
+                <button
+                  onClick={handleDeleteStory}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  Delete Story
+                </button>
+              </div>
+            )}
+            <button onClick={handlePausePlay} className="text-white cursor-pointer mr-4">
+              {isPaused ? <FaPlay /> : <FaPause />}
+            </button>
             <Link to="/">
               <FaTimes className="text-white cursor-pointer" />
             </Link>
           </div>
-          <div className="absolute top-0 left-0 w-full h-2 bg-gray-800">
+          <div className="absolute z-50 top-0 left-0 w-full h-2 bg-gray-800">
             <div
               className="h-full bg-[#307777]"
-              style={{ animation: "progress 15s linear forwards" }}
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <img
-            src={selectedStory.mainImage}
-            alt="Main Story"
-            className="w-full h-full object-cover rounded-lg"
-          />
+          <div
+            className="w-full h-full flex justify-center items-center relative"
+            style={{
+              backgroundColor: selectedStory.backgroundColor || '#000',
+              color: selectedStory.textColor || '#FFF',
+              fontSize: '2rem',
+              textAlign: 'center'
+            }}
+          >
+            <img
+              src={selectedStory.image || dummyProfilePic}
+              alt="Main Story"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{
+                color: selectedStory.textColor || '#FFF',
+                fontSize: '2rem',
+                textAlign: 'center'
+              }}
+            >
+              {selectedStory.text}
+            </div>
+          </div>
           <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
-            <FaArrowLeft className="text-white text-2xl cursor-pointer" />
+            <FaArrowLeft className="text-white text-2xl cursor-pointer" onClick={handlePreviousStory} />
           </div>
           <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-            <FaArrowRight className="text-white text-2xl cursor-pointer" />
+            <FaArrowRight className="text-white text-2xl cursor-pointer" onClick={handleNextStory} />
           </div>
           <div className="absolute bottom-4 left-32 transform -translate-x-1/2 bg-white text-black bg-opacity-50 px-4 py-2 rounded-lg flex items-center">
             <input

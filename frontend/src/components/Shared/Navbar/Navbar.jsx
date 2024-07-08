@@ -123,6 +123,10 @@ const Navbar = () => {
                 src={user.profilePic}
                 alt="User"
                 className="w-10 h-10 rounded-full"
+                onError={(e) =>
+                  (e.target.src =
+                    "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
+                }
               />
             </button>
             {dropdownOpen && (

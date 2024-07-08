@@ -10,6 +10,7 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import userImg from "../../../assets/images/user/user1.png";
+const dummyProfilePic = "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg";
 
 const Sidebar = ({ user }) => {
   // console.log(user);
@@ -20,6 +21,10 @@ const Sidebar = ({ user }) => {
           src={user.profilePic}
           alt="James Rodigan"
           className="w-12 h-12 rounded-full"
+          onError={(e) =>
+            (e.target.src =
+              "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
+          }
         />
         <span className="font-semibold text-lg">{user.name}</span>
       </div>

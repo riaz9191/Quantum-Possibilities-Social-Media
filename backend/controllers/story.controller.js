@@ -36,7 +36,7 @@ exports.getAllStories = async (req, res) => {
 
 exports.getStoryById = async (req, res) => {
   try {
-    const story = await Story.findById(req.params.id).populate('user', 'username email');
+    const story = await Story.findById(req.params.id);
     if (!story) return res.status(404).json({ error: 'Story not found' });
     res.status(200).json(story);
   } catch (err) {
@@ -89,7 +89,7 @@ exports.addView = async (req, res) => {
 
 exports.getStoryViews = async (req, res) => {
   try {
-    const story = await Story.findById(req.params.id).populate('views.user', 'username email');
+    const story = await Story.findById(req.params.id);
     if (!story) return res.status(404).json({ error: 'Story not found' });
     res.status(200).json(story.views);
   } catch (err) {

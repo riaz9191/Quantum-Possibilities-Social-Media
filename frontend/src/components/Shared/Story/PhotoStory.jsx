@@ -63,7 +63,7 @@ const PhotoStory = () => {
         privacy: storyType
       };
 
-      const response = await axios.post('http://localhost:5000/api/stories', storyData);
+      const response = await axios.post('https://qsbackend-riaz9191s-projects.vercel.app/api/stories', storyData);
 
       toast.success('Post successfully saved');
       setTimeout(() => {

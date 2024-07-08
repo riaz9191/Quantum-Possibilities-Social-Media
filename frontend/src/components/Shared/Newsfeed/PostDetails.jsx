@@ -116,27 +116,27 @@ const PostDetails = ({
               className="absolute top-8 right-0 w-48 border-2 bg-white rounded-md shadow-lg z-20"
             >
               <ul className="py-1">
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaTimes className="mr-3" />
                   <span>Hide Post</span>
                 </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaBookmark className="mr-3" />
                   <span>Bookmark</span>
                 </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaFlag className="mr-3" />
                   <span>Report</span>
                 </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaBan className="mr-3" />
                   <span>Block</span>
                 </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaBellSlash className="mr-3" />
                   <span>Turn off notifications</span>
                 </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:text-red-500 cursor-pointer">
                   <FaLink className="mr-3" />
                   <span>Copy Link</span>
                 </li>
@@ -150,7 +150,7 @@ const PostDetails = ({
           <img
             src={`https://quantumpossibilities.eu:82/uploads/posts/${post.media[0].media}`}
             alt="Post"
-            className="w-full rounded-lg mb-4"
+            className="w-full rounded-lg mb-4 mt-3"
           />
 
           {/* <p>{post.description}</p> */}
@@ -271,6 +271,10 @@ const PostDetails = ({
           src={user.profilePic}
           alt="User"
           className="w-8 h-8 rounded-full"
+          onError={(e) =>
+            (e.target.src =
+              "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
+          }
         />
         <input
           type="text"

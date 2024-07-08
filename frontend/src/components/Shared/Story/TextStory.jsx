@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaPalette, FaLock, FaGlobe, FaUsers, FaTimes } from "react-icons/fa";
 import { SketchPicker } from "react-color";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Draggable from "react-draggable";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const TextStory = () => {
   const [backgroundColor, setBackgroundColor] = useState("#334BC6");
@@ -15,6 +17,8 @@ const TextStory = () => {
   const [isPrivacyOptionsVisible, setIsPrivacyOptionsVisible] = useState(false);
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [overlayText, setOverlayText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleTextChange = (e) => {
     setOverlayText(e.target.value);
@@ -28,6 +32,34 @@ const TextStory = () => {
   const handleTextClear = () => {
     setOverlayText('');
     setHasStartedTyping(false);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const storyData = {
+      user: "60d0fe4f5311236168a109ca", // Replace with actual user ID
+      type: "text",
+      text: overlayText,
+      image: "",
+      backgroundColor,
+      textColor,
+      privacy,
+    };
+
+    try {
+      const response = await axios.post("https://qsbackend-riaz9191s-projects.vercel.app/api/stories", storyData);
+      toast.success("Story created successfully!");
+      navigate('/');
+      setOverlayText("");
+      setBackgroundColor("#334BC6");
+      setTextColor("#FFFFFF");
+      setPrivacy("Public");
+    } catch (error) {
+      toast.error("Failed to create story.");
+      console.error("Error creating story:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -100,8 +132,12 @@ const TextStory = () => {
           </div>
         </div>
         <div>
-          <button className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full">
-            Create Story
+          <button
+            className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? "Posting..." : "Create Story"}
           </button>
         </div>
       </div>

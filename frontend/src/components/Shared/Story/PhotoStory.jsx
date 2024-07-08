@@ -68,7 +68,7 @@ const PhotoStory = () => {
       toast.success('Post successfully saved');
       setTimeout(() => {
         navigate('/');
-      }, 2000);
+      }, 500);
     } catch (error) {
       toast.error('Error saving story');
     } finally {

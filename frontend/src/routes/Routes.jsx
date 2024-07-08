@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
         path: "/create-photo-story",
         element: <PhotoStory />,
       },
+      {
+        path: "/create-text-story",
+        element: <TextStory />,
+      },
       // {
       //   path: '/create-text-story',
       //   element: <TextStory />,
@@ -51,10 +55,7 @@ export const router = createBrowserRouter([
   },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
-  {
-    path: "/create-text-story",
-    element: <TextStory />,
-  },
+  
   {
     path: "/my-story",
     element: <MyStory />,

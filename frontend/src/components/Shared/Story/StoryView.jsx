@@ -84,19 +84,20 @@ const StoryView = () => {
       console.error("Error deleting story:", error);
     }
   };
-  const dropdownRef = useRef(null);
-const handleClickOutside = (event) => {
-  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-    setShowDropdown(false);
-  }
-};
 
-useEffect(() => {
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
+  const dropdownRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
   };
-}, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!selectedStory) return <div>Loading...</div>;
 
@@ -127,9 +128,11 @@ useEffect(() => {
             />
             <div>
               <p className="text-sm font-bold">Abdul</p>
-              <p className="text-xs text-gray-500"> {formatDistanceToNow(new Date(story.createdAt), {
-                      addSuffix: true,
-                    })}</p>
+              <p className="text-xs text-gray-500">
+                {formatDistanceToNow(new Date(story.createdAt), {
+                  addSuffix: true,
+                })}
+              </p>
             </div>
             <div className="pl-20">❤️❤️❤️</div>
           </div>
@@ -147,13 +150,20 @@ useEffect(() => {
             />
             <div className="text-white">
               <p className="font-bold">{dummyName}</p>
-              <p className="text-xs">{new Date(selectedStory.createdAt).toLocaleString()}</p>
+              <p className="text-xs">
+                {new Date(selectedStory.createdAt).toLocaleString()}
+              </p>
             </div>
           </div>
           <div className="absolute z-50 top-4 right-4 flex items-center ">
-            <FaEllipsisH className="text-white cursor-pointer mr-4" onClick={() => setShowDropdown(!showDropdown)} />
+            <FaEllipsisH
+              className="text-white cursor-pointer mr-4"
+              onClick={() => setShowDropdown(!showDropdown)}
+            />
             {showDropdown && (
-              <div   ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50"
+              <div
+                ref={dropdownRef}
+                className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50"
               >
                 <button
                   onClick={handleDeleteStory}
@@ -163,7 +173,10 @@ useEffect(() => {
                 </button>
               </div>
             )}
-            <button onClick={handlePausePlay} className="text-white cursor-pointer mr-4">
+            <button
+              onClick={handlePausePlay}
+              className="text-white cursor-pointer mr-4"
+            >
               {isPaused ? <FaPlay /> : <FaPause />}
             </button>
             <Link to="/">
@@ -177,35 +190,59 @@ useEffect(() => {
             ></div>
           </div>
           <div
-            className="w-full h-full flex justify-center items-center relative"
+            className="w-full h-[600px] flex justify-center items-center relative"
             style={{
-              backgroundColor: selectedStory.backgroundColor || '#000',
-              color: selectedStory.textColor || '#FFF',
-              fontSize: '2rem',
-              textAlign: 'center'
+              backgroundColor:
+                selectedStory.type === "text"
+                  ? selectedStory.backgroundColor || "#000"
+                  : "#000",
+              color: selectedStory.textColor || "#FFF",
+              fontSize: "2rem",
+              textAlign: "center",
             }}
           >
-            <img
-              src={selectedStory.image || dummyProfilePic}
-              alt="Main Story"
-              className="w-full h-full object-cover rounded-lg"
-            />
+            {selectedStory.type === "photo" ? (
+              <img
+                src={selectedStory.image || dummyProfilePic}
+                alt="Main Story"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div
+                className="w-full h-full flex justify-center items-center relative"
+                style={{
+                  backgroundColor:
+                    selectedStory.backgroundColor || "#000",
+                  color: selectedStory.textColor || "#FFF",
+                  fontSize: "2rem",
+                  textAlign: "center",
+                }}
+              >
+                {selectedStory.text}
+              </div>
+            )}
             <div
               className="absolute inset-0 flex items-center justify-center"
               style={{
-                color: selectedStory.textColor || '#FFF',
-                fontSize: '2rem',
-                textAlign: 'center'
+                color: selectedStory.textColor || "#FFF",
+                fontSize: "2rem",
+                textAlign: "center",
               }}
             >
               {selectedStory.text}
             </div>
           </div>
           <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
-            <FaArrowLeft className="text-white text-2xl cursor-pointer" onClick={handlePreviousStory} />
+            <FaArrowLeft
+              className="text-white text-2xl cursor-pointer"
+              onClick={handlePreviousStory}
+            />
           </div>
           <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-            <FaArrowRight className="text-white text-2xl cursor-pointer" onClick={handleNextStory} />
+            <FaArrowRight
+              className="text-white text-2xl cursor-pointer"
+              onClick={handleNextStory}
+            />
           </div>
           <div className="absolute bottom-4 left-32 transform -translate-x-1/2 bg-white text-black bg-opacity-50 px-4 py-2 rounded-lg flex items-center">
             <input

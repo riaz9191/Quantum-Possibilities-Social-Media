@@ -83,11 +83,26 @@ const NewsfeedTop = ({ user }) => {
         {stories.map((story) => (
           <SwiperSlide key={story._id} className="relative w-32 h-56">
             <Link to={`/view-story/${story._id}`}>
-              <img
-                src={story.image || dummyProfilePic}
-                alt="Post"
-                className="w-32 h-56 rounded-3xl object-cover"
-              />
+              {story.type === "photo" ? (
+                <img
+                  src={story.image || dummyProfilePic}
+                  alt="Post"
+                  className="w-32 h-56 rounded-3xl object-cover"
+                />
+              ) : (
+                <div
+                  className="w-32 h-56 flex items-center justify-center rounded-3xl"
+                  style={{
+                    backgroundColor: story.backgroundColor,
+                    color: story.textColor,
+                    fontSize: "1rem",
+                    textAlign: "center",
+                    padding: "10px",
+                  }}
+                >
+                  {story.text}
+                </div>
+              )}
               <div className="absolute bottom-0 left-0 p-2">
                 <img
                   src={story.user.profilePic || dummyProfilePic}

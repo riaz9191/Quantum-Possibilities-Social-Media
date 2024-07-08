@@ -78,12 +78,10 @@ const PhotoStory = () => {
 
   return (
     <div className="md:flex h-screen bg-gray-200">
-     
-      {/* Left Side */}
-      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden">
+      <div className="md:w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between hidden md:block">
         <div>
           <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
-          <div className="mb-6">
+          <div className="relative mb-6">
             <textarea
               className="w-full h-40 border border-gray-300 rounded p-2"
               placeholder="Start Typing"
@@ -141,7 +139,7 @@ const PhotoStory = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="hidden md:block">
           <button
             className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full"
             onClick={handleSubmit}
@@ -152,7 +150,6 @@ const PhotoStory = () => {
         </div>
       </div>
 
-      {/* Right Side */}
       <div className="md:w-3/4 md:flex justify-center items-center bg-gray-100 p-10">
         <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl">
           <h2 className="text-xl font-bold mb-6 text-center">Preview</h2>
@@ -217,8 +214,18 @@ const PhotoStory = () => {
               <div className="text-center mt-2">Select photo to crop and rotate</div>
             </div>
           )}
+          <div className="block md:hidden mt-4">
+            <button
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? 'Posting...' : 'Create Story'}
+            </button>
+          </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

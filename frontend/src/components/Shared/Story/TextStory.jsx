@@ -1,43 +1,29 @@
 import React, { useState } from "react";
-import { FaPalette, FaLock, FaGlobe, FaUsers, FaTimes } from "react-icons/fa";
-import { SketchPicker } from "react-color";
+import { FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Draggable from "react-draggable";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 const TextStory = () => {
   const [backgroundColor, setBackgroundColor] = useState("#334BC6");
   const [textColor, setTextColor] = useState("#FFFFFF");
-  const [isTextColorPickerVisible, setIsTextColorPickerVisible] =
-    useState(false);
-  const [isBackgroundColorPickerVisible, setIsBackgroundColorPickerVisible] =
-    useState(false);
   const [privacy, setPrivacy] = useState("Public");
-  const [isPrivacyOptionsVisible, setIsPrivacyOptionsVisible] = useState(false);
-  const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [overlayText, setOverlayText] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleTextChange = (e) => {
     setOverlayText(e.target.value);
-    if (!hasStartedTyping && e.target.value !== "") {
-      setHasStartedTyping(true);
-    } else if (e.target.value === "") {
-      setHasStartedTyping(false);
-    }
   };
 
   const handleTextClear = () => {
     setOverlayText('');
-    setHasStartedTyping(false);
   };
 
   const handleSubmit = async () => {
     setLoading(true);
     const storyData = {
-      user: "60d0fe4f5311236168a109ca", // Replace with actual user ID
+      user: "60d0fe4f5311236168a109ca", 
       type: "text",
       text: overlayText,
       image: "",
@@ -64,8 +50,7 @@ const TextStory = () => {
 
   return (
     <div className="md:flex h-screen bg-gray-200">
-      {/* Left Side */}
-      <div className="w-1/4 bg-white p-6 border-r border-gray-200 md:flex flex-col justify-between">
+      <div className="md:w-1/4 bg-white p-6 border-r border-gray-200 hidden md:flex flex-col justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-4">Create Your Story</h1>
           <div className="relative mb-6">
@@ -143,21 +128,33 @@ const TextStory = () => {
       </div>
 
       {/* Right Side */}
-      <div className="md:w-3/4 md:flex justify-center items-center bg-gray-100 p-10">
-        <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl">
+      <div className="md:w-3/4 md:flex justify-center items-center bg-gray-100 p-10 w-full">
+        <div className="bg-white rounded-lg shadow-lg p-10 md:w-10/12 max-w-8xl w-full">
           <h2 className="text-xl font-bold mb-6 text-center">Preview</h2>
           <div
-            className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10"
+            className="relative flex justify-center items-center h-[500px] bg-gray-50 rounded-lg border border-gray-300 py-10 my-10 w-full"
             style={{ backgroundColor }}
           >
-            <div className="absolute inset-0 flex justify-center items-center">
-              <span className="text-center text-4xl font-bold" style={{ color: textColor }}>
-                {overlayText}
-              </span>
-            </div>
+            <textarea
+              className="absolute flex justify-center items-center inset-0 w-full h-full bg-transparent text-4xl font-bold text-center resize-none focus:outline-none"
+              style={{ color: textColor }}
+              placeholder="Start Typing"
+              value={overlayText}
+              onChange={handleTextChange}
+            />
+          </div>
+          <div className="block md:hidden mt-4">
+            <button
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300 w-full"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Posting..." : "Create Story"}
+            </button>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

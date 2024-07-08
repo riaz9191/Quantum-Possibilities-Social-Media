@@ -37,7 +37,7 @@ const NewsfeedTop = ({ user }) => {
         />
         <input
           type="text"
-          placeholder={`What's on your mind, ${user.firstName}?`}
+          placeholder={`What's on your mind, ${user.name}?`}
           className="w-full p-2 rounded-full bg-gray-100 focus:outline-none"
         />
         <FaImages className="text-green-500 md:hidden" />
@@ -62,11 +62,11 @@ const NewsfeedTop = ({ user }) => {
         navigation
         className="flex space-x-2 w-full overflow-x-auto"
       >
-        <SwiperSlide className="relative w-32 h-56">
+        <SwiperSlide className="relative w-full h-32 md:w-32 md:h-56">
           <img
             src={user.profilePic || dummyProfilePic}
             alt="Profile"
-            className="w-32 h-56 rounded-3xl object-cover"
+            className="w-full h-32 md:w-32 md:h-56 rounded-3xl object-cover"
             onError={(e) =>
               (e.target.src =
                 "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
@@ -74,24 +74,24 @@ const NewsfeedTop = ({ user }) => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <Link to="/story">
-              <button className="absolute bottom-0 bg-green-500 py-2 px-3 rounded-full text-white text-xl">
+              <button className="absolute bottom-0 left-50 bg-green-500 py-2 px-3 rounded-full text-white text-xl">
                 +
               </button>
             </Link>
           </div>
         </SwiperSlide>
         {stories.map((story) => (
-          <SwiperSlide key={story._id} className="relative w-32 h-56">
+          <SwiperSlide key={story._id} className="relative w-full h-32 md:w-32 md:h-56">
             <Link to={`/view-story/${story._id}`}>
               {story.type === "photo" ? (
                 <img
                   src={story.image || dummyProfilePic}
                   alt="Post"
-                  className="w-32 h-56 rounded-3xl object-cover"
+                  className="w-full h-32 md:w-32 md:h-56 rounded-3xl object-cover"
                 />
               ) : (
                 <div
-                  className="w-32 h-56 flex items-center justify-center rounded-3xl"
+                  className="w-full h-32 md:w-32 md:h-56 flex items-center justify-center rounded-3xl"
                   style={{
                     backgroundColor: story.backgroundColor,
                     color: story.textColor,

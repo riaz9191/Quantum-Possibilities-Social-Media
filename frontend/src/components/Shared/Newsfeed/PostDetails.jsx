@@ -1,4 +1,4 @@
-// PostDetails.jsx
+/* eslint-disable react/prop-types */
 import React, { useState, useRef, useEffect } from "react";
 import {
   FaThumbsUp,
@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
+import axios from "axios";
 
 const PostDetails = ({
   post,
@@ -29,6 +30,7 @@ const PostDetails = ({
   const [showMoreComments, setShowMoreComments] = useState(false);
   const [visibleComments, setVisibleComments] = useState(post.comments);
   const [hasMoreComments, setHasMoreComments] = useState(true);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const dropdownRef = useRef(null);
 
   const fetchMoreComments = async () => {
@@ -70,6 +72,58 @@ const PostDetails = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleShowMoreDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const renderDescription = () => {
+    if (post.description.length <= 250) {
+      return <p className="text-xl py-3">{post.description}</p>;
+    }
+
+    if (showFullDescription) {
+      return (
+        <div>
+          <p className="text-xl py-3">{post.description}</p>
+          <button onClick={handleShowMoreDescription} className="text-blue-500">
+            show less
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <p className="text-xl py-3">
+          {post.description.substring(0, 250)}...
+          <button onClick={handleShowMoreDescription} className="text-blue-500">
+            show more
+          </button>
+        </p>
+      </div>
+    );
+  };
+
+  const renderLifeEvent = () => {
+    if (post.life_event_id) {
+      return (
+        <div className="text-center my-4">
+          <img
+            src={post.life_event_id.icon}
+            alt="Life Event"
+            className="w-16 h-16 mx-auto mb-2"
+          />
+          <h3 className="text-lg font-semibold">{post.life_event_id.title}</h3>
+          <p>{post.life_event_id.date}</p>
+          <div className="border-t-2 border-gray-300 my-2">
+            <p className="mt-2">{post.life_event_id.description}</p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="bg-white p-4 shadow-md rounded-lg mb-4 mt-4">
@@ -145,6 +199,8 @@ const PostDetails = ({
           )}
         </div>
       </div>
+      {post.description && renderDescription()}
+      {renderLifeEvent()}
       {post.media.length > 0 && (
         <>
           <img
@@ -152,13 +208,6 @@ const PostDetails = ({
             alt="Post"
             className="w-full rounded-lg mb-4 mt-3"
           />
-
-          {/* <p>{post.description}</p> */}
-        </>
-      )}
-      {post.description && (
-        <>
-          <p className="text-xl py-3">{post.description}</p>
         </>
       )}
       <div className="flex items-center justify-between mb-2">
@@ -217,7 +266,6 @@ const PostDetails = ({
                     "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg")
                 }
               />
-
               <div className="flex flex-col">
                 <div className="bg-gray-100 p-2 rounded-lg flex-1">
                   <p className="font-semibold">{`${comment.user_id.first_name} ${comment.user_id.last_name}`}</p>
@@ -229,7 +277,6 @@ const PostDetails = ({
                       addSuffix: true,
                     })}
                   </span>
-
                   <button className="font-semibold">Like</button>
                   <button className="font-semibold">Reply</button>
                 </div>

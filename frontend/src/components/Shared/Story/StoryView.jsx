@@ -12,7 +12,7 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 
 const dummyProfilePic = "https://i.ibb.co/vxpYCYg/dummy-avatar-d2ecc4e8.jpg";
-const dummyName = "John Doe";
+const dummyName = "Abdul";
 
 const StoryView = () => {
   const { id } = useParams();

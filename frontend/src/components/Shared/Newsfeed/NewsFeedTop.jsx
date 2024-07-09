@@ -57,10 +57,10 @@ const NewsfeedTop = ({ user }) => {
         </button>
       </div>
       <Swiper
-        spaceBetween={10}
+        spaceBetween={0}
         slidesPerView={5}
         navigation
-        className="flex space-x-2 w-full overflow-x-auto"
+        className="flex  w-full overflow-x-auto"
       >
         <SwiperSlide className="relative w-full h-32 md:w-32 md:h-56">
           <img
@@ -81,7 +81,7 @@ const NewsfeedTop = ({ user }) => {
           </div>
         </SwiperSlide>
         {stories.map((story) => (
-          <SwiperSlide key={story._id} className="relative w-full h-32 md:w-32 md:h-56">
+          <SwiperSlide key={story._id} className="relative w-full h-32 md:w-full md:h-56">
             <Link to={`/view-story/${story._id}`}>
               {story.type === "photo" ? (
                 <img

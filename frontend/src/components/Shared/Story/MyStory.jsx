@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 // import { useHistory } from 'react-router-dom';
 
 const stories = [
-  // Add your story data here
+
   {
     id: 1,
     name: "Ayesha Akter Mitu",

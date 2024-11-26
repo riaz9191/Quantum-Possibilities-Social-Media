@@ -4,36 +4,29 @@ import Newsfeed from "../../components/Shared/Newsfeed/Newsfeed";
 import RightSidebar from "../../components/Shared/RightSidebar/RightSidebar";
 import Sidebar from "../../components/Shared/Sidebar/Sidebar";
 import Sidebar2 from "../../components/Shared/Sidebar2/Sidebar2";
-import axios from "axios";
 import Loader from "../../components/Shared/Loader/Loader";
 
 const Home = () => {
-  const [user, setUser] = useState({ name: "", profilePic: "" });
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({ name: "John Doe", profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTflYvogfRbEf-CKXnGSgljjZW_NObr5ECtCjHtMnKIeWO5qPPYYKtAuDaH3XSaDQs0DyY&usqp=CAU" });
+  const [loading, setLoading] = useState(false);  // Set to false since there's no actual loading
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.post("https://quantumpossibilities.eu:82/api/user-login", {
-          email: localStorage.getItem('email'),
-          password:localStorage.getItem('password'),
-        });
-        // console.log(response.data.user);
+    // Simulate fetching user data with a delay
+    const fetchUserData = () => {
+      setTimeout(() => {
         setUser({
-          name: `${response.data.user.first_name} ${response.data.user.last_name}`,
-          profilePic: `https://quantumpossibilities.eu:82/uploads/${response.data.user.profile_pic}`,
+          name: "Jane Doe",
+          profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTflYvogfRbEf-CKXnGSgljjZW_NObr5ECtCjHtMnKIeWO5qPPYYKtAuDaH3XSaDQs0DyY&usqp=CAU",
         });
-        setLoading(false)
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+        setLoading(false);
+      }, 1000);
     };
 
     fetchUserData();
   }, []);
-  
-  if(loading){
-    return <Loader/>
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -45,7 +38,7 @@ const Home = () => {
         <Sidebar2 />
       </div>
       <div className="w-full md:w-6/12">
-        <Newsfeed  user={user} />
+        <Newsfeed user={user} />
       </div>
       <div className="w-2/12 hidden md:flex">
         <RightSidebar />
@@ -55,3 +48,4 @@ const Home = () => {
 };
 
 export default Home;
+

@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
-import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/login', {
-        email,
-        password,
-      });
-
+    if (email === 'demo@demo.com' && password === 'demo123') {
       // after successful login
-      console.log(response.data);
+      console.log('Login success');
       // saving token to local storage
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
-      localStorage.setItem('email', response.data.user.email);
+      localStorage.setItem('accessToken', 'dummyAccessToken');
+      localStorage.setItem('refreshToken', 'dummyRefreshToken');
+      localStorage.setItem('email', email);
       localStorage.setItem('password', password);
       // redirect to home page
-      navigate('/')
-    } catch (err) {
+      window.location.href = '/';
+    } else {
       setError('Invalid email or password');
     }
   };
@@ -89,14 +81,14 @@ const LoginPage = () => {
           <div className="my-6 flex items-center justify-center">
             <span className="text-gray-400 mx-2">or sign up with</span>
           </div>
+          <p className="text-center text-gray-400 text-sm">
+            Demo Account: <br />
+            email: demo@demo.com <br />
+            password: demo123
+          </p>
           <p className="text-center text-gray-700 mt-6">
             Don't have an Account? <a href="/signup" className="text-blue-500">Sign up here</a>
           </p>
-        <div className=" mt-3 text-gray-400 flex">
-          <p>Login info: </p>
-          <p className='pl-3'> anik.ba@pakizatvl.com</p>
-          <p className='pl-3'> 12345678As@</p>
-        </div>
         </div>
       </div>
     </div>
@@ -104,3 +96,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
